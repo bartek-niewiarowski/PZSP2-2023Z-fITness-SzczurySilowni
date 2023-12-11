@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import styles from './Header.module.css'; // Import your CSS file
 import Navigation from './Navigation.js';
 
@@ -15,9 +14,7 @@ const Header = () => {
                 </Link>
             </div>
             <div className={styles.item}>
-                <ul className={styles.list}>
-                    <Navigation />
-                </ul>
+                <Navigation/>
             </div>
         </div>
     );
