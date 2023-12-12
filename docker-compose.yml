@@ -4,13 +4,32 @@ services:
   pzsp2-db:
     image: mysql
     container_name: pzsp2-db-mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: passwd
     ports:
       - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: passwd
     volumes:
       - pzsp2-db:/var/lib/mysql
-      - ./db/db_init:/docker-entrypoint-initdb.d
+      - ./fITness_db/db_init:/docker-entrypoint-initdb.d
+
+  backend:
+    image: python:3.12
+    container_name: pzsp2-backend-app
+    ports:
+      - "8000:8000"
+    environment:
+      MYSQL_HOST: pzsp2-db
+      MYSQL_PORT: "3306"
+      MYSQL_USER: root
+      MYSQL_PASSWORD: passwd
+      MYSQL_DB: pzsp2-db
+    volumes:
+      - ./fITness_backend:/app
+    command: [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+    depends_on:
+      - pzsp2-db
+    links:
+      - pzsp2-db
 
 volumes:
   pzsp2-db:
