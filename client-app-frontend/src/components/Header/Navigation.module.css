@@ -37,3 +37,8 @@
     cursor: pointer;
     color: rgb(107, 25, 25);
   }
+
+  .header {
+    background-color: black;
+    margin-top: 0;
+  }

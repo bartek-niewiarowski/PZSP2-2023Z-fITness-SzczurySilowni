@@ -26,8 +26,6 @@ function Navigation() {
     setIsRegisterVisible(false);
   };
   return (
-    <div>
-    <header className={styles.header}>
       <nav>
         <ul className={styles.list}>
           <li className={styles.listItem}>
@@ -37,7 +35,7 @@ function Navigation() {
             <Link className={styles.link} to='/aboutUs'>O Nas</Link>
           </li>
           <li className={styles.listItem}>
-            <Link className={styles.link} to='/contact'>Kontakt</Link>
+            <Link className={styles.link} to='/MyAccount'>Moje Konto</Link>
           </li>
           <a href="#" onClick={handleLoginClick} className={styles.listItem}>
             Logowanie
@@ -49,8 +47,6 @@ function Navigation() {
           <Regsiter isVisible ={isRegisterVisible} onClose={handleRegisterClose} />
         </ul>
       </nav>
-    </header>
-    </div>
   );
 }
 
