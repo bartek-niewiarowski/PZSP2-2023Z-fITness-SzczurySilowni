@@ -1,0 +1,21 @@
+.footer {
+    background-color: black;
+    padding: 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  .contactInfo {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .contactInfo h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .contactInfo p {
+    display: inline-block;
+    margin: 5px 10px;
+  }
