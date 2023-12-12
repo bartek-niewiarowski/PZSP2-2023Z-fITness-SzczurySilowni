@@ -8,6 +8,7 @@
     left: 0%;
     z-index: 999;
     background-color: black;
+    text-decoration: none;
   }
   
   .item {
@@ -26,64 +27,5 @@
   
   .item:nth-child(2) {
     flex: 3;
-  }
-  
-  .callButton {
-    background-color: white;
-    border-radius: 50%;
-    padding: 10px;
-    width: 150px;
-    height: 150px;
-    top: 10%;
-  }
-  
-  .texts {
-    margin-left: 20px;
-    color: white;
-  }
-  
-  .text:first-child {
-    font-size: 20px;
-    font-weight: 500;
-  }
-  
-  .text:last-child {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  @media screen and (max-width:480px) {
-    .item:nth-child(2) {
-      display: none;
-    }
-  
-    .item:nth-child(1) {
-      flex: 3;
-    }
-  }
-
-  .list {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    list-style: none;
-    color: white;
-    margin-top: -4%;
-    margin-left: -220px;
-  }
-  
-  .listItem {
-    font-size: 24px;
-    margin: 30px;
-    font-weight: 500;
-  }
-
-  .listItem:last-child {
-    margin-left: 30px;
-    margin-right: 5px;
-  }
-
-  .listItem:hover {
-    cursor: pointer;
-    color: rgb(107, 25, 25);
+    margin-top: 2%;
   }
