@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  pzsp2-db:
+    image: mysql
+    container_name: pzsp2-db-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: passwd
+    ports:
+      - "3307:3306"
+    volumes:
+      - pzsp2-db:/var/lib/mysql
+      - ./db/db_init:/docker-entrypoint-initdb.d
+
+volumes:
+  pzsp2-db:
