@@ -1,14 +1,19 @@
-FROM python:3.12
+FROM python:alpine3.16
 
 WORKDIR /app
 
 COPY requirements.txt /app/
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+RUN apk update && \
+    apk add --virtual build-deps gcc python3-dev musl-dev && \
+    apk add --no-cache mariadb-dev && \
+    apk add netcat-openbsd
+
+RUN pip3 install --upgrade pip && \
+    pip3 install -r requirements.txt && \
+    apk del build-deps
 
 COPY . /app/
+RUN chmod 755 wait-for-db.sh
 
-RUN python manage.py migrate
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["./wait-for-db.sh"]

@@ -8,6 +8,8 @@ services:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: passwd
+    expose:
+      - "3306"
     volumes:
       - pzsp2-db:/var/lib/mysql
       - ./fITness_db/db_init:/docker-entrypoint-initdb.d
@@ -28,7 +30,6 @@ services:
       MYSQL_DB: pzsp2-db
     volumes:
       - ./fITness_backend:/app
-    command: [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
     depends_on:
       - pzsp2-db
     links:
