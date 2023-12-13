@@ -14,6 +14,9 @@ services:
 
   backend:
     image: python:3.12
+    build:
+      context: ./fITness_backend
+      dockerfile: Dockerfile
     container_name: pzsp2-backend-app
     ports:
       - "8000:8000"

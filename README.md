@@ -38,3 +38,5 @@
     
 
 ## Uruchamianie projektu
+
+    docker-compose up --build
