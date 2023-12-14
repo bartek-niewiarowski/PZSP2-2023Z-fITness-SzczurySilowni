@@ -35,5 +35,14 @@ services:
     links:
       - pzsp2-db
 
+  frontend:
+    image: node:14.17.3
+    container_name: pzsp2-frontend
+    build:
+      context: ./client-app-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
 volumes:
   pzsp2-db:
