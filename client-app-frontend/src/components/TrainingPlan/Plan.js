@@ -14,9 +14,9 @@ const Plan = () => {
 
   return (
     <div className="App">
-      <h1>Week View Calendar with react</h1>
+      <h1>Your Week Calendar</h1>
       <br />
-      <h2>Example</h2>
+      <h2>Check out this week's training</h2>
       <Calendar showDetailsHandle={showDetailsHandle} />
       <br />
       {showDetails && <Details data={data} />}

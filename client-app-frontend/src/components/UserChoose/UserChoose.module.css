@@ -1,0 +1,44 @@
+.categoryList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    position: relative;
+    margin-left: 7%;
+    margin-top: 40px;
+  }
+
+  .text {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .category {
+    text-align: center;
+    font-weight: bold;
+    padding: 7px;
+    background-color: rgb(3, 3, 3);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color:white;
+    font-size: 16px;
+    width: auto;
+    height: 40px;
+    margin: 10px, 30px;
+  }
+
+  .category.active {
+    color: #f71a29;
+  }
+
+  .category:hover {
+    cursor: pointer;
+    color: #f71a29;
+  }
+
+  .chosed {
+    margin-left: 7%;
+    margin-top: 2%;
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+  }
