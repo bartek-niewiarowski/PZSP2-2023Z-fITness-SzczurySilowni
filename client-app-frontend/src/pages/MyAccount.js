@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import Plan from '../components/TrainingPlan/Plan';
 import UserChoose from '../components/UserChoose/UserChoose';
+import Subsription from '../components/Subscription/Subscription';
 
 const MyAccount = () => {
 
@@ -18,6 +19,7 @@ const MyAccount = () => {
     <Box>
       <UserChoose options={menu} onChangeView={onChangeView} activeView={activeView}/>
       {activeView == "Calendar" && <Plan/>}
+      {activeView == "Subsription" && <Subsription/>}
     </Box>
   );
 };

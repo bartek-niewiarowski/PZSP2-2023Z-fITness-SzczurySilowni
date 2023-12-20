@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./UserChoose.module.css";
 
 export default function UserChoose({ options, onChangeView, activeView }) {
