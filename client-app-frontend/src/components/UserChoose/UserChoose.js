@@ -4,7 +4,7 @@ import styles from "./UserChoose.module.css";
 export default function UserChoose({ options, onChangeView, activeView }) {
   
   const handleViewClick = (view) => {
-    onChangeview(view);
+    onChangeView(view);
   };
 
   return (
@@ -16,7 +16,7 @@ export default function UserChoose({ options, onChangeView, activeView }) {
           className={`${styles.view} ${
             activeView === view ? styles.active : ""
           }`}W
-          onClick={() => handleviewClick(view)}
+          onClick={() => handleViewClick(view)}
         >
           <div className={styles.text}>{view}</div>
         </div>

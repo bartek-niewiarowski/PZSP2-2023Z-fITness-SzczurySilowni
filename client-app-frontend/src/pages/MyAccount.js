@@ -16,7 +16,7 @@ const MyAccount = () => {
 
   return (
     <Box>
-      <UserChoose categories={menu} onChangeCategory={onChangeView} activeView={activeView}/>
+      <UserChoose options={menu} onChangeView={onChangeView} activeView={activeView}/>
       {activeView == "Calendar" && <Plan/>}
     </Box>
   );
