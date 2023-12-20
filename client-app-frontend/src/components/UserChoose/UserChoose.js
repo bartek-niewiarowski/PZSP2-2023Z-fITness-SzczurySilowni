@@ -1,24 +1,24 @@
 import { useState } from "react";
 import styles from "./UserChoose.module.css";
 
-export default function UserChoose({ categories, onChangeCategory, activeView }) {
+export default function UserChoose({ options, onChangeView, activeView }) {
   
-  const handleCategoryClick = (category) => {
-    onChangeCategory(category);
+  const handleViewClick = (view) => {
+    onChangeview(view);
   };
 
   return (
     <div>
-    <div className={styles.categoryList}>
-      {categories.map((category) => (
+    <div className={styles.viewList}>
+      {options.map((view) => (
         <div
-          key={category}
-          className={`${styles.category} ${
-            activeView === category ? styles.active : ""
+          key={view}
+          className={`${styles.view} ${
+            activeView === view ? styles.active : ""
           }`}W
-          onClick={() => handleCategoryClick(category)}
+          onClick={() => handleviewClick(view)}
         >
-          <div className={styles.text}>{category}</div>
+          <div className={styles.text}>{view}</div>
         </div>
       ))}
     </div>
