@@ -2,10 +2,12 @@ import "./styles.css";
 import { useState } from "react";
 import Calendar from "./Calendar";
 import Details from "./Details";
+import TrainingCreator from "./TrainingCreator";
 
 const Plan = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
+  const [isTraining, setIsTraining] = useState(false);
 
   const showDetailsHandle = (dayStr) => {
     setData(dayStr);
@@ -20,6 +22,7 @@ const Plan = () => {
       <Calendar showDetailsHandle={showDetailsHandle} />
       <br />
       {showDetails && <Details data={data} />}
+      {!isTraining && <TrainingCreator/>}
     </div>
   );
 }

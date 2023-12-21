@@ -7,7 +7,7 @@ import MyData from '../components/MyData/MyData';
 
 const MyAccount = () => {
 
-  const menu = ["Calendar", "Subsription", "Traning Plan", "My Data"];
+  const menu = ["Calendar", "Subsription", "My Data", "My Progress"];
   const [activeView, setActiveView] = useState("Calendar");
 
   function onChangeView(view) {
