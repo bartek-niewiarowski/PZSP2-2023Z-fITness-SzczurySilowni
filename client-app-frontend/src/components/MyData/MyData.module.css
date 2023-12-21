@@ -1,0 +1,39 @@
+.container {
+    font-size: 16px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.input {
+    margin-left: 20px;
+    height: 25px; /* Dostosuj wysokość do potrzeb */
+    width: auto;
+    padding: 4px;
+    font-size: 16px; /* Dostosuj rozmiar czcionki do potrzeb */
+    border: 2px solid black;
+    border-radius: 5%;
+  }
+
+.label {
+    margin-left: 40%;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+.button {
+    margin-bottom: 30px;
+    height: 30px;
+    width: 120px;
+    margin-left: 40%;
+}
+
+.button:hover {
+    border: 2px solid #f71a29;
+}
+
+.button:active {
+    color: #f71a29;
+}
