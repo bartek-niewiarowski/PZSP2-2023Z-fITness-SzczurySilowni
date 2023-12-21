@@ -22,7 +22,7 @@ const Plan = () => {
       <Calendar showDetailsHandle={showDetailsHandle} />
       <br />
       {showDetails && <Details data={data} />}
-      {!isTraining && <TrainingCreator/>}
+      {showDetails && !isTraining && <TrainingCreator/>}
     </div>
   );
 }
