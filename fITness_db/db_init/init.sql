@@ -40,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Users` (
   `second_name` VARCHAR(45) NULL,
   `surname` VARCHAR(45) NOT NULL,
   `gender` VARCHAR(1) NULL,
-  `subscription_plan` INT NULL,
+  `subscription_plan_id` INT NULL,
   `subscription_expiration` DATE NULL,
   PRIMARY KEY (`user_id`),
-  INDEX `sub_plan_idx` (`subscription_plan` ASC) VISIBLE,
+  INDEX `sub_plan_idx` (`subscription_plan_id` ASC) VISIBLE,
   CONSTRAINT `sub_plan`
-    FOREIGN KEY (`subscription_plan`)
+    FOREIGN KEY (`subscription_plan_id`)
     REFERENCES `pzsp2-db`.`Subscription_plans` (`subscription_plan_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
