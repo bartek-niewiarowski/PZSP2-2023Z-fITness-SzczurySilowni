@@ -1,8 +1,8 @@
 from django.urls import path, include
 from .views import (
-    GymApiView,
+    UserApiView,
 )
 
 urlpatterns = [
-    path('api', GymApiView.as_view()),
+    path('api', UserApiView.as_view()),
 ]

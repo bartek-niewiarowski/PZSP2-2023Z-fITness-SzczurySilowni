@@ -22,14 +22,3 @@ class User(models.Model):
     subscription_expiration = models.DateField(null=True, blank=True)
     class Meta:
         db_table = 'Users'
-
-class Gym(models.Model):
-    gym_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=45)
-    address = models.CharField(max_length=45, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    mens_lockers = models.IntegerField(null=True, blank=True)
-    womans_lockers = models.IntegerField(null=True, blank=True)
-    manager = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    class Meta:
-        db_table = 'Gyms'

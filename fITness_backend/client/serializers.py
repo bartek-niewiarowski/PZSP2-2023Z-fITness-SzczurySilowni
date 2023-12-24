@@ -2,7 +2,7 @@ from .models import *
 from rest_framework import serializers
 
 
-class GymSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gym
-        fields = ('gym_id', 'name', 'address', 'description', 'mens_lockers', 'womans_lockers', 'manager')
+        model = User
+        fields = ('user_id', 'user_name', 'email', 'password', 'access_rights', 'name', 'second_name', 'surname', 'gender', 'subscription_plan', 'subscription_expiration')
