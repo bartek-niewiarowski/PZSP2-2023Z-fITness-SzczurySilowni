@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import User
+from .models import Users
 from .serializers import UserSerializer
 
 
@@ -13,6 +13,6 @@ class UserApiView(APIView):
         '''
         List all the todo items for given requested user
         '''
-        users = User.objects.all()
+        users = Users.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
