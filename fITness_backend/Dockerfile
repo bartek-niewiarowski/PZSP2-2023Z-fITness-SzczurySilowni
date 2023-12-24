@@ -16,4 +16,4 @@ RUN pip3 install --upgrade pip && \
 COPY . /app/
 RUN chmod 755 wait-for-db.sh
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["./wait-for-db.sh"]
