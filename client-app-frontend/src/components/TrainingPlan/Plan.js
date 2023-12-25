@@ -3,11 +3,12 @@ import { useState } from "react";
 import Calendar from "./Calendar";
 import Details from "./Details";
 import TrainingCreator from "./TrainingCreator";
+import TrainingSession from "./TrainingSession";
 
 const Plan = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
-  const [isTraining, setIsTraining] = useState(false);
+  const [isTraining, setIsTraining] = useState(true);
 
   const showDetailsHandle = (dayStr) => {
     setData(dayStr);
@@ -23,6 +24,7 @@ const Plan = () => {
       <br />
       {showDetails && <Details data={data} />}
       {showDetails && !isTraining && <TrainingCreator/>}
+      {showDetails && isTraining && <TrainingSession/>}
     </div>
   );
 }
