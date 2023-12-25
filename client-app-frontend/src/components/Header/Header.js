@@ -5,7 +5,7 @@ import Navigation from './Navigation.js';
 
 import Logo from '../../assets/Logo.png';
 
-const Header = () => {
+const Header = (items) => {
     return (
         <div className={styles.container}>
             <div className={styles.item}> 
@@ -14,7 +14,7 @@ const Header = () => {
                 </Link>
             </div>
             <div className={styles.item}>
-                <Navigation/>
+                <Navigation items={items}/>
             </div>
         </div>
     );

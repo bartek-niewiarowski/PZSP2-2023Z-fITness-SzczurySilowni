@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Login from '../Login/Login.js';
-import Regsiter from '../Register/Register.js';
+import Register from '../Register/Register.js';
 
 import styles from './Navigation.module.css'; // Import your CSS file
 
-function Navigation() {
+function Navigation({items}) {
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isRegisterVisible, setIsRegisterVisible] = useState(false);
 
@@ -44,7 +44,7 @@ function Navigation() {
           <a href="#" onClick={handleRegisterClick} className={styles.listItem}>
             Rejestracja
           </a>
-          <Regsiter isVisible ={isRegisterVisible} onClose={handleRegisterClose} />
+          <Register isVisible ={isRegisterVisible} onClose={handleRegisterClose} />
         </ul>
       </nav>
   );
