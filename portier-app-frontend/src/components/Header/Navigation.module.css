@@ -1,0 +1,44 @@
+.list {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    color: white;
+    margin-top: -4%;
+    margin-left: 220px;
+    text-decoration: none;
+  }
+  
+  .listItem {
+    font-size: 24px;
+    margin: 30px;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+  }
+
+  .listItem:last-child {
+    margin-left: 30px;
+    margin-right: 5px;
+  }
+
+  .listItem:hover {
+    cursor: pointer;
+    color: #f71a29;
+  }
+
+  .link {
+    text-decoration: none;
+    color: white;
+  }
+
+  
+  .link:hover {
+    cursor: pointer;
+    color: #f71a29;
+  }
+
+  .header {
+    background-color: black;
+    margin-top: 0;
+  }
