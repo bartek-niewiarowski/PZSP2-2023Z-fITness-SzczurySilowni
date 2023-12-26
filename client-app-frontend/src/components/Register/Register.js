@@ -31,6 +31,7 @@ const Regsiter = ({isVisible, onClose}) => {
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        className={styles.input}
                     />
                     <label className={styles.label} htmlFor="password">Hasło:</label>
                     <input
@@ -38,6 +39,7 @@ const Regsiter = ({isVisible, onClose}) => {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className={styles.input}
                     />
                     <label className={styles.label} htmlFor="password">Powtórz Hasło:</label>
                     <input
@@ -45,6 +47,7 @@ const Regsiter = ({isVisible, onClose}) => {
                         id="password"
                         value={rePassword}
                         onChange={(e) => setRePassword(e.target.value)}
+                        className={styles.input}
                     />
                     <button className={styles.button} onClick={handleRegister}>Zarejestruj</button>
                     <p className={styles.info}>{message}</p>

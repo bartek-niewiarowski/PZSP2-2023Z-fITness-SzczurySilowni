@@ -24,7 +24,7 @@
 
   .listItem:hover {
     cursor: pointer;
-    color: rgb(107, 25, 25);
+    color: #f71a29;
   }
 
   .link {
@@ -35,7 +35,7 @@
   
   .link:hover {
     cursor: pointer;
-    color: rgb(107, 25, 25);
+    color: #f71a29;
   }
 
   .header {

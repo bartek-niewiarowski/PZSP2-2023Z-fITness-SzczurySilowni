@@ -8,10 +8,11 @@ import { Box } from '@mui/system';
 import './App.css';
 
 function App() {
+  const items = {clubs: {to: 'ourClubs', desc: 'Nasze kluby'}}
   return (
     <Box m="auto">
       <Router>
-        <Header />
+        <Header items={items}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/MyAccount" element={<MyAccount />} />
