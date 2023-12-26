@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ustawia wysokość kontenera na 100% wysokości widoku */
+}
+
+.header {
+    margin-left: 41%;
+    font-size: 24px;
+    text-decoration: underline;
+}
+
+.button {
+    margin-bottom: 30px;
+    height: 40px;
+    width: 300px;
+    margin-left: 41%;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.button:hover {
+    border: 2px solid #f71a29;
+}
+
+.button:active {
+    color: #f71a29;
+}

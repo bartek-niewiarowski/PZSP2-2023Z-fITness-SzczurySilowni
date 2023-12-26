@@ -10,7 +10,11 @@ const UsersTable = ({ users }) => {
   const [searchLastName, setSearchLastName] = useState('');
   const [searchEmail, setSearchEmail] = useState('');
 
-  const registerUser = (userId) => {
+  const registerEntry = (userId) => {
+    console.log(`Zarejestrowano użytkownika o ID: ${userId}`);
+  }
+
+  const registerExit = (userId) => {
     console.log(`Zarejestrowano użytkownika o ID: ${userId}`);
   }
 
@@ -31,6 +35,7 @@ const UsersTable = ({ users }) => {
           <th>Nazwisko</th>
           <th>Email</th>
           <th>Zarejestruj Wejście</th>
+          <th>Zarejestruj Wyjście</th>
         </tr>
       </thead>
       <tbody>
@@ -80,7 +85,12 @@ const UsersTable = ({ users }) => {
             <td>{user.lastName}</td>
             <td>{user.email}</td>
             <td>
-                <button onClick={() => registerUser(user.id)} className={styles.button}>
+                <button onClick={() => registerEntry(user.id)} className={styles.button}>
+                  Zarejestruj
+                </button>
+            </td>
+            <td>
+                <button onClick={() => registerExit(user.id)} className={styles.button}>
                   Zarejestruj
                 </button>
             </td>
