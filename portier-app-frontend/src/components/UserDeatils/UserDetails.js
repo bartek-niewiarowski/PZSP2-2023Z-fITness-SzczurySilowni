@@ -5,6 +5,7 @@ import MyData from '../MyData/MyData';
 import styles from './UserDetails.module.css'
 import ConfirmBox from '../ConfirmBox/ConfirmBox';
 import { useState } from 'react';
+import Payments from '../MyData/Payments';
 
 const UserDetails = ({ users }) => {
   const { userId } = useParams();
@@ -26,12 +27,17 @@ const UserDetails = ({ users }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.header}>Profil użytkownika: {userId}</h2>
-      <MyData/>
-      <button className={styles.button} onClick={openConfirmationDialog}>Usuń użytkownika</button>
-      {isConfirmationOpen && <ConfirmBox message={`Czy na pewno chcesz usunąć użytkownika o id: ${userId}?`} onConfirm={handleDelete} onClose={closeConfirmationDialog}/>}
-    </div>
+      <div className={styles.container}>
+      <div>
+        <h2 className={styles.header}>Profil użytkownika: {userId}</h2>
+        <MyData/>
+        <button className={styles.button} onClick={openConfirmationDialog}>Usuń użytkownika</button>
+        {isConfirmationOpen && <ConfirmBox message={`Czy na pewno chcesz usunąć użytkownika o id: ${userId}?`} onConfirm={handleDelete} onClose={closeConfirmationDialog}/>}
+      </div>
+      <div>
+        <Payments/>
+      </div>
+      </div>
   );
 };
 

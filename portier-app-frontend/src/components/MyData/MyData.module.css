@@ -8,25 +8,28 @@
 
 .input {
     height: 40px; /* Dostosuj wysokość do potrzeb */
-    width: auto;
+    width: 30%;
     padding: 4px;
     font-size: 20px; /* Dostosuj rozmiar czcionki do potrzeb */
     border: 2px solid black;
     font-weight: bold;
+    text-align: center;
+    margin-left: 10px;
   }
 
 .label {
-    margin-left: 41%;
-    margin-right:50%;
+    margin-left: 40px;
     margin-bottom: 8px;
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
   }
 
 .button {
+    margin-left: 20px;
     margin-bottom: 30px;
     height: 40px;
     width: 200px;
-    margin-left: 47%;
     font-size: 16px;
     color: white;
     font-weight: bold;
@@ -41,4 +44,9 @@
 
 .button:active {
     color: #f71a29;
+}
+
+.header {
+    font-size: 24px;
+    text-decoration: underline;
 }
