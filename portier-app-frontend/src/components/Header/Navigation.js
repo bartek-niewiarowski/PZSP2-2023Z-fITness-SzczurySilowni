@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Login from '../Login/Login.js';
 import Register from '../Register/Register.js';
