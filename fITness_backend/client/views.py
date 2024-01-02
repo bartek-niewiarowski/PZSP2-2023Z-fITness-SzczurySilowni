@@ -1,10 +1,12 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Users
-from .serializers import UserSerializer
+from .models import Users, Trainings
+from .serializers import UserSerializer, TrainingsSerializer
 
 
 # Create your views here.
@@ -13,6 +15,16 @@ from .serializers import UserSerializer
 #         users = Users.objects.all()
 #         serializer = UserSerializer(users, many=True)
 #         return Response(serializer.data, status=status.HTTP_200_OK)
+# Apka Klienta
+#
+# - obsługa logowania
+# - dodanie użytkownika
+# - pobranie treningu danego dnia dla danego użytkownika
+# - pobranie dokładnych informacji o treningu, ćwiczenia, serie
+# - dodanie danego treningu, user, trener, data
+# - anulowanie danego treningu / opcjonalnie
+# - zmiana subskrybcji
+# - update usera
 
 
 class UserApiView(APIView):
@@ -20,14 +32,34 @@ class UserApiView(APIView):
         email = request.query_params.get('email', None)
         password = request.query_params.get('password', None)
         if email and password:
-            books = Users.objects.filter(email=email, password=password)
+            users = Users.objects.filter(email=email, password=password)
         else:
-            books = Users.objects.all()
-        serializer = UserSerializer(books, many=True)
+            users = Users.objects.all()
+        serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TrainingApiView(APIView):
+    def get(self, request, format=None):
+        start = request.query_params.get('start')
+        client = request.query_params.get('client')
+        if start and client:
+            print(start)
+            training = Trainings.objects.filter(start=start, client=client)
+        else:
+            training = Trainings.objects.all()
+        serializer = TrainingsSerializer(training, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, format=None):
+        serializer = TrainingsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
