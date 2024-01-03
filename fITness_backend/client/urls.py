@@ -1,10 +1,11 @@
 from django.urls import path, include
 from .views import (
-    UserApiView, TrainingApiView, UpdateUserView,
+    UserApiView, TrainingApiView, UpdateUserView, DeleteTrainingView,
 )
 
 urlpatterns = [
     path('user_api', UserApiView.as_view()),
     path('training_api', TrainingApiView.as_view()),
-    path('update_user/<int:pk>', UpdateUserView.as_view())
+    path('update_user/<int:pk>', UpdateUserView.as_view()),
+    path('delete_training/<int:pk>', DeleteTrainingView.as_view())
 ]
