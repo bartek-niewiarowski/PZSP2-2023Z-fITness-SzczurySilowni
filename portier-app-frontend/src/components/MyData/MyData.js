@@ -19,6 +19,7 @@ export default function MyData() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+        setIsConfirmationOpen(false);
         // Tutaj możesz obsłużyć zatwierdzenie zmian, na przykład wysłać dane na serwer
         console.log('Zatwierdzono zmiany:', { name, birthdate });
       };
