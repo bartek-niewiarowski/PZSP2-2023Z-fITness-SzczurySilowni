@@ -51,8 +51,7 @@ class TrainingApiView(APIView):
         start = request.query_params.get('start')
         client = request.query_params.get('client')
         if start and client:
-            print(start)
-            training = Trainings.objects.filter(start=start, client=client)
+            training = Trainings.objects.filter(start__startswith=start, client=client)
         else:
             training = Trainings.objects.all()
         serializer = TrainingsSerializer(training, many=True)
