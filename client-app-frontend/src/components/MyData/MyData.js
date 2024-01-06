@@ -16,23 +16,15 @@ export default function MyData() {
         subscription_expiration: '',
         subscription_plan_id: ''
       });
+
+    const [buttonText, setButtonText] = useState("Zatwierdź zmiany");
     
     
     useEffect(() => {
             const fetchData = async () => {
             try {   
                 const gotUser = JSON.parse(localStorage.getItem('user'));
-                if(gotUser)
-                {
-                    setUserData(gotUser);
-                    console.log(userData);
-                    //setSecondName(gotUser.second_name)
-                    //setSurname(gotUser.surname)
-                    //setEmail(gotUser.email)
-                    //setGender(gotUser.gender)
-                    //setExpiration(gotUser.subscription_expiration)
-                    //setPlan(gotUser.subscription_plan_id)
-                }
+                if(gotUser){ setUserData(gotUser)}
             } catch (error) {
               console.error('Error fetching data:', error);
             }
@@ -48,8 +40,6 @@ export default function MyData() {
       };
 
       const handleUpdateUser = () => {
-        //userData.user_id = parseInt(userData.user_id, 10);
-        userData.subscription_plan_id = parseInt(userData.subscription_plan_id, 10);
         // Wyślij zaktualizowane dane użytkownika na serwer
         fetch(`http://localhost:8000/client/update_user/${userData.user_id}`, {
           method: 'PUT',
@@ -60,6 +50,8 @@ export default function MyData() {
         })
           .then(response => response.json())
           .then(data => console.log('Użytkownik zaktualizowany pomyślnie:', data))
+          .then(localStorage.setItem('user', JSON.stringify(userData)))
+          .then(setButtonText("Dane zostały zaktualizowane"))
           .catch(error => console.error('Błąd podczas aktualizacji użytkownika:', error));
       };
     return (
@@ -104,7 +96,7 @@ export default function MyData() {
                 Data wygaśnięcia pakietu:
                 <input type="text" name="subscription_expiration" value={userData.subscription_expiration} disabled className={styles.input}/>
             </label>
-            <button type="submit" onClick = {handleUpdateUser} className={styles.button}>Zatwierdź zmiany</button>
+            <button type="submit" onClick = {handleUpdateUser} className={styles.button}>{buttonText}</button>
         </div>
     )
 }
