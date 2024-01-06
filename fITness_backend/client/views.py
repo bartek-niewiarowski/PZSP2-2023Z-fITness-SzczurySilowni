@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Users, Trainings
-from .serializers import UserSerializer, TrainingsSerializer
+from .models import Users, Trainings, SubscriptionPlans
+from .serializers import UserSerializer, TrainingsSerializer, SubscriptionPlansSerializer
 
 
 # Create your views here.
@@ -83,3 +83,16 @@ class DeleteTrainingView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class SubscriptionPlansView(APIView):
+    def get(self, request, format=None):
+        user_name = request.query_params.get('user_name')
+        if user_name:
+            user = Users.objects.filter(user_name=user_name)
+            subscription_plan = SubscriptionPlans.objects.filter(subscription_plan_id=user[0].subscription_plan_id)
+        else:
+            subscription_plan = SubscriptionPlans.objects.all()
+        serializer = SubscriptionPlansSerializer(subscription_plan, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+

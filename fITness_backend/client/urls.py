@@ -1,11 +1,12 @@
 from django.urls import path, include
 from .views import (
-    UserApiView, TrainingApiView, UpdateUserView, DeleteTrainingView,
+    UserApiView, TrainingApiView, UpdateUserView, DeleteTrainingView, SubscriptionPlansView,
 )
 
 urlpatterns = [
     path('user_api', UserApiView.as_view()),
     path('training_api', TrainingApiView.as_view()),
     path('update_user/<int:pk>', UpdateUserView.as_view()),
-    path('delete_training/<int:pk>', DeleteTrainingView.as_view())
+    path('delete_training/<int:pk>', DeleteTrainingView.as_view()),
+    path('get_subscription', SubscriptionPlansView.as_view())
 ]
