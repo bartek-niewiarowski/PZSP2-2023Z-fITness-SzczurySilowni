@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import styles from "./MyData.module.css"
+import styles from "./MyData.module.css";
 
 export default function MyData() {
 
@@ -63,10 +63,6 @@ export default function MyData() {
             <label className={styles.label}>
                 Id użytkownika:
                 <input type="text" value={userData.user_id} disabled className={styles.input}/>
-            </label>
-            <label className={styles.label}>
-                Płeć:
-                <input type="text" value={userData.gender} disabled className={styles.input}/>
             </label>
             <label className={styles.label}>
                 Imie:

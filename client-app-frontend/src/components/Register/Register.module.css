@@ -9,14 +9,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 5px solid rgba(0, 0, 0, 0.1);;
+    border: 5px solid rgba(0, 0, 0, 0.1);
   }
 
   .formContainer {
     display: flex;
     flex-direction: column;
     width: 300px;
-    height: 250px;
+    height: auto;
   }
 
   .title {
@@ -24,7 +24,7 @@
     color: black;
     font-weight: bold;
   }
-  
+
   .loginBox {
     background-color: #fff;
     padding: 20px;
