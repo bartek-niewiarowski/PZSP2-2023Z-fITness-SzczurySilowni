@@ -2,7 +2,7 @@ FROM node:14.17.3
 
 WORKDIR /frontend
 
-COPY . .
+#COPY . .
 
 RUN npm install
 
