@@ -7,7 +7,7 @@ const Login = ({ isVisible, onClose }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [User, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const handleClose = () => {
     onClose();
   };

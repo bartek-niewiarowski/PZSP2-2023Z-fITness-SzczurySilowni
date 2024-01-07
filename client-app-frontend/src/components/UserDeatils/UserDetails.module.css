@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    height: 100vh; /* Ustawia wysokość kontenera na 100% wysokości widoku */
+    width: 100vw;
+}
+
+.container > div {
+    width: 40%;
+    margin-right: 10%;
+    border-right: 1px solid black;
+    padding: 10px; /* opcjonalne: dodaj padding dla lepszego wyglądu */
+  }
+
+.container > div:first-child {
+    margin-left: 20%;
+}
+  
+.container > div:last-child {
+    border-right: none; /* usuń prawą linię dla ostatniego kontenera */
+  }
+
+.view {
+    flex: 1;
+    border-right: 1px solid black;
+    padding: 10px; /* opcjonalne: dodaj padding dla lepszego wyglądu */
+}
+
+.header {
+    font-size: 24px;
+    text-decoration: underline;
+}
+
+.button {
+    margin-left: -25px;
+    margin-bottom: 30px;
+    height: 40px;
+    width: 300px;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.button:hover {
+    border: 2px solid #f71a29;
+}
+
+.button:active {
+    color: #f71a29;
+}

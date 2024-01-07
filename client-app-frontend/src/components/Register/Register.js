@@ -59,8 +59,9 @@ const Regsiter = ({isVisible, onClose}) => {
           .then(data => console.log('Użytkownik zaktualizowany pomyślnie:', data))
           .then(localStorage.setItem('user', JSON.stringify(userData)))
           .then(setMessage("Rejestracja zakończona sukcesem"))
-          .then(setTimeout(() => {onClose()}, 3000))
+          .then(setTimeout(() => {onClose()}, 5000))
           .then(updateUser())
+          .then(onClose())
           .catch(error => setMessage('Błąd podczas rejsetracji użytkownika:', error));}
     };
 

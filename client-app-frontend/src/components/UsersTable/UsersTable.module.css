@@ -1,0 +1,56 @@
+/* UserTable.css */
+.user {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .user th, .user td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .user th {
+    background-color: #f2f2f2;
+  }
+
+  .input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+  }
+
+  .button {
+    background-color: black;
+    color: white;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+
+  .button:hover {
+    border: 3px solid #f71a29;
+  }
+
+  .button:active {
+    color: #f71a29;
+  }
+
+  .registerButton {
+    background-color: black;
+    border-radius: 2px;
+    border-color: rgba(32, 31, 31, 0);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    height: 40px;
+    width: auto;
+    margin-left: 80%;
+  }
+
+  .registerButton:hover {
+    border: 2px solid #f71a29;
+ }
