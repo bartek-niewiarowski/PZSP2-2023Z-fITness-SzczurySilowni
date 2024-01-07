@@ -10,6 +10,7 @@ function Navigation({items}) {
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isRegisterVisible, setIsRegisterVisible] = useState(false);
   const isUserLoggedIn = !!localStorage.getItem('user');
+  const loggedUser = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -53,8 +54,16 @@ function Navigation({items}) {
     }
   };
 
+  const checkPermision = (role) => {
+    if(loggedUser.access_rights === "ADM") return true;
+    if(loggedUser.access_rights === "PRT" && (role === "USR" || role === "PRT")) return true;
+    if(loggedUser.access_rights === "TRN" && (role === "USR" || role === "TRN")) return true;
+    if(loggedUser.access_rights === "USR" && role === "USR") return true;
+    else return false;
+  }
+
   const handleNavigation = (role) => {
-    if (true) {
+    if (checkPermision()) {
       redirectToRolePage(role);
     } else {
       alert('Brak odpowiednich uprawnień do tej sekcji.');
