@@ -134,7 +134,7 @@ export default function Subscription() {
             <span className={styles.closeButton} onClick={handleClose}>
               &times;
             </span>
-            <div className={styles.question}> buttonText</div>
+            <div className={styles.question}> {buttonText} </div>
             <button className={styles.confirmButton} onClick={handleConfirm}>Tak</button>
           </div>
         </div>
