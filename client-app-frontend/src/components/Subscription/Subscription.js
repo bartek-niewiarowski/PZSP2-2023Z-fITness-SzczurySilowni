@@ -1,63 +1,144 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Subscription.module.css";
 
-export default function Subsription() {
-
-const [activeSub, setActiveSub] = useState("Open");
-const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-const options = ["Open", "Week", "Student", "Senior"];
-const Informations = {"Open": {price: 22, avability: "every time", lenght: "1 month"}, "Week": {price: 62, avability: "every time", lenght: "1 month"},
-"Student": {price: 52, avability: "every time", lenght: "1 month"}, "Senior": {price: 12, avability: "every time", lenght: "12 month"}}
-  
+export default function Subscription() {
+  const [activeSub, setActiveSub] = useState('');
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [subscriptionPlans, setSubscriptionPlans] = useState([]);
+  const [buttonText, setButtonText] = useState('')
+  const [activeSubscription, setActiveSubscription] = useState({
+    subscription_plan_id: "",
+    name: "",
+    cost: null
+  });
+  const [userData, setUserData] = useState({
+    user_id: null,
+    user_name: '',
+    email: '',
+    password: '',
+    access_rights: '',
+    name: '',
+    second_name: '',
+    surname: '',
+    gender: '',
+    subscription_expiration: null,
+    subscription_plan_id: null
+  });
+  //Zmiana wybranej subskrypcji
   const handleSubChange = (sub) => {
-    setActiveSub(sub)
+    setActiveSub(sub);
+    setUserData({
+      ...userData,
+      subscription_plan_id: sub,
+    });
+    setButtonText(`Czy jesteś pewien że chcesz zmienić pakiet na: ${activeSubscription.name}?`)
   };
-
+  //Update danych uzytkownika
+  const UpdateUser = () => {
+    // Wyślij zaktualizowane dane użytkownika na serwer
+    fetch(`http://localhost:8000/client/update_user/${userData.user_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then(response => response.json())
+      .then(data => console.log('Użytkownik zaktualizowany pomyślnie:', data))
+      .then(localStorage.setItem('user', JSON.stringify(userData)))
+      .then(setButtonText(`Zmieniono subskrypcję na: ${activeSubscription.name}.`))
+      .catch(error => console.error('Błąd podczas aktualizacji użytkownika:', error));
+  };
+  //Otwarcie okna dialogowego
   const openConfirmationDialog = () => {
     setIsConfirmationOpen(true);
   }
-
+  //Zamkniecie okna dialogowego
   const handleClose = () => {
     setIsConfirmationOpen(false);
   }
-
+  //Zamkniecie okna dialogowego i update danych uzytkownika
   const handleConfirm = () => {
     setIsConfirmationOpen(false);
+    UpdateUser();
   }
+  //Pobranie poczatkowych danych
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/client/get_subscription');
+        const result = await response.json();
+        console.log(result);
+        setSubscriptionPlans(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    const getUser = () => {
+      try {
+        const gotUser = JSON.parse(localStorage.getItem('user'));
+        if (gotUser) {
+          setUserData(gotUser);
+          setActiveSub(gotUser.subscription_plan_id);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+    getUser();
+    fetchData();
+  }, []); // useEffect runs only once after the component is mounted
+
+  useEffect(() => {
+    // Check if subscriptionPlans is an array and activeSub is not an empty string
+    if (Array.isArray(subscriptionPlans) && activeSub !== '') {
+      const gotActiveSubscription = subscriptionPlans.find(
+        (plan) => plan.subscription_plan_id === activeSub
+      );
+      if (gotActiveSubscription) {
+        setActiveSubscription(gotActiveSubscription);
+      }
+    }
+  }, [subscriptionPlans, activeSub]);
 
   return (
     <div>
-    <div className={styles.viewList}>
-      {options.map((opt) => (
-        <div
-          key={opt}
-          className={`${styles.view} ${
-            activeSub === opt ? styles.active : ""
-          }`}W
-          onClick={() => handleSubChange(opt)}
-        >
-          <div className={styles.text}>{opt}</div>
-        </div>
-      ))}
-    </div>
-    <div className={styles.info}>
-        <div>{activeSub}</div>
-        <div>Price: {Informations[activeSub].price}</div>
-        <div>Avability: {Informations[activeSub].avability}</div>
-        <div>Lenght: {Informations[activeSub].lenght}</div>
-        <button className={styles.button} onClick={openConfirmationDialog}>Wybieram ten pakiet</button>
-    </div>
-    {isConfirmationOpen && (
-      <div className={styles.confirmContainer}>
-        <div className={styles.confirmBox}>
-          <span className={styles.closeButton} onClick={handleClose}>
-            &times;
-          </span>
-          <div className={styles.question}> Czy jesteś pewien że chcesz zmienić pakiet na: {activeSub}?</div>
-          <button className={styles.confirmButton} onClick={handleConfirm}>Tak</button>
-        </div>
+      <div className={styles.viewList}>
+        {Array.isArray(subscriptionPlans)
+          ? subscriptionPlans.map((plan) => (
+            <div
+              key={plan.subscription_plan_id}
+              className={`${styles.view} ${
+                activeSub === plan.subscription_plan_id ? styles.active : ""
+              }`}
+              onClick={() => handleSubChange(plan.subscription_plan_id)}
+            >
+              <div className={styles.text}>
+                {plan.name}
+              </div>
+            </div>
+          ))
+          : <p>Error: subscriptionPlans is not an array</p>}
       </div>
-    )}
+      {activeSub !== '' && (
+        <div className={styles.info}>
+          <div>{activeSubscription.name}</div>
+          <div>Price: {activeSubscription.cost}</div>
+          <button className={styles.button} onClick={openConfirmationDialog}>Wybieram ten pakiet</button>
+        </div>
+      )}
+      {isConfirmationOpen && (
+        <div className={styles.confirmContainer}>
+          <div className={styles.confirmBox}>
+            <span className={styles.closeButton} onClick={handleClose}>
+              &times;
+            </span>
+            <div className={styles.question}> buttonText</div>
+            <button className={styles.confirmButton} onClick={handleConfirm}>Tak</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

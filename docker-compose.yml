@@ -43,6 +43,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    volumes:
+      - ./client-app-frontend:/frontend
 
 volumes:
   pzsp2-db:
