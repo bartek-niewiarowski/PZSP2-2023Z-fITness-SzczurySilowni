@@ -42,3 +42,12 @@
     background-color: black;
     margin-top: 0;
   }
+
+  .roleDropdown {
+    background-color: black;
+    color: white;
+    font-size: 24px;
+    width: auto;
+    height: auto;
+    margin-left: 20px;
+  }

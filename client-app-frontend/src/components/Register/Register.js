@@ -1,20 +1,67 @@
 import React, {useState} from "react";
 import styles from './Register.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const Regsiter = ({isVisible, onClose}) => {
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
     const [message, setMessage] = useState('');
     const handleClose = () => {
         onClose();
     };
 
+    const updateUser = () => {
+        setUserData({
+            user_id: uuidv4(),
+            user_name: '',
+            email: '',
+            password: '',
+            access_rights: 'rw',
+            name: '',
+            second_name: '',
+            surname: '',
+            gender: '',
+            subscription_expiration: '',
+            subscription_plan_id: ''
+        });
+    };
+    const [userData, setUserData] = useState({
+        user_id: uuidv4(),
+        user_name: '',
+        email: '',
+        password: '',
+        access_rights: 'rw',
+        name: '',
+        second_name: '',
+        surname: '',
+        gender: '',
+        subscription_expiration: null,
+        subscription_plan_id: null
+      });
+    const handleInputChange = (e) => {
+    setUserData({
+        ...userData,
+        [e.target.name]: e.target.value,
+    });
+    };
+
     const handleRegister = () => {
-        // Tutaj umieść logikę do sprawdzania poprawności loginu i hasła
-        // np. poprzez wywołanie odpowiedniej funkcji lub API
-        setMessage('abcd');
+        userData.user_id = parseInt(userData.user_id, 10);
+        if(userData.password != rePassword) {setMessage("Wprowadzone hasła nie są identyczne")}
+        else{
+        fetch('http://localhost:8000/client/user_api', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        })
+          .then(response => response.json())
+          .then(data => console.log('Użytkownik zaktualizowany pomyślnie:', data))
+          .then(localStorage.setItem('user', JSON.stringify(userData)))
+          .then(setMessage("Rejestracja zakończona sukcesem"))
+          .then(setTimeout(() => {onClose()}, 3000))
+          .then(updateUser())
+          .catch(error => setMessage('Błąd podczas rejsetracji użytkownika:', error));}
     };
 
     return(
@@ -25,20 +72,22 @@ const Regsiter = ({isVisible, onClose}) => {
                 </span>
                 <h2 className={styles.title}>Zarejestruj się już dziś</h2>
                 <div className={styles.formContainer}>
-                    <label className={styles.label} htmlFor="username">Login:</label>
+                    <label className={styles.label} htmlFor="username">Nazwa Użytkownika:</label>
                     <input
                         type="text"
                         id="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        name="user_name"
+                        value={userData.user_name}
+                        onChange={handleInputChange}
                         className={styles.input}
                     />
                     <label className={styles.label} htmlFor="password">Hasło:</label>
                     <input
                         type="password"
                         id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        name="password"
+                        value={userData.password}
+                        onChange={handleInputChange}
                         className={styles.input}
                     />
                     <label className={styles.label} htmlFor="password">Powtórz Hasło:</label>
@@ -49,6 +98,54 @@ const Regsiter = ({isVisible, onClose}) => {
                         onChange={(e) => setRePassword(e.target.value)}
                         className={styles.input}
                     />
+                    <h2 className={styles.title}>Podaj swoje dane</h2>
+                    <label className={styles.label} htmlFor="username">Email:</label>
+                    <input
+                        type="text"
+                        id="email"
+                        name="email"
+                        value={userData.email}
+                        onChange={handleInputChange}
+                        className={styles.input}
+                    />
+                    <label className={styles.label} htmlFor="username">Imie:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={userData.username}
+                        onChange={handleInputChange}
+                        className={styles.input}
+                    />
+                    <label className={styles.label} htmlFor="username">Drugie Imie:</label>
+                    <input
+                        type="text"
+                        id="second_name"
+                        name="second_name"
+                        value={userData.second_name}
+                        onChange={handleInputChange}
+                        className={styles.input}
+                    />
+                    <label className={styles.label} htmlFor="username">Nazwisko:</label>
+                    <input
+                        type="text"
+                        id="surname"
+                        name="surname"
+                        value={userData.surname}
+                        onChange={handleInputChange}
+                        className={styles.input}
+                    />
+                    <label className={styles.label} htmlFor="username">Płeć:</label>
+                    <select
+                        id="gender"
+                        name="gender"
+                        value={userData.gender}
+                        onChange={handleInputChange}
+                        className={styles.input}
+                    >
+                        <option value="M">M</option>
+                        <option value="W">W</option>
+                    </select>
                     <button className={styles.button} onClick={handleRegister}>Zarejestruj</button>
                     <p className={styles.info}>{message}</p>
                 </div>
