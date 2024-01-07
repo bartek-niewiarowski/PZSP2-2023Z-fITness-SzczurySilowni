@@ -26,12 +26,13 @@
 }
 
 .header {
+    align-items: center;
     font-size: 24px;
     text-decoration: underline;
 }
 
 .button {
-    margin-left: -25px;
+    align-items: center;
     margin-bottom: 30px;
     height: 40px;
     width: 300px;

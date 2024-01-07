@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styles from "./MyData.module.css";
 
-export default function MyData() {
+export default function MyData({userId = null}) {
 
     const [userData, setUserData] = useState({
         user_id: '',
@@ -22,9 +22,14 @@ export default function MyData() {
     
     useEffect(() => {
             const fetchData = async () => {
-            try {   
-                const gotUser = JSON.parse(localStorage.getItem('user'));
-                if(gotUser){ setUserData(gotUser)}
+            try {
+                if(userId) {
+                  //Pobierz usera o podanym Id
+                }
+                else {
+                  const gotUser = JSON.parse(localStorage.getItem('user'));
+                  if(gotUser){ setUserData(gotUser)}
+                } 
             } catch (error) {
               console.error('Error fetching data:', error);
             }
