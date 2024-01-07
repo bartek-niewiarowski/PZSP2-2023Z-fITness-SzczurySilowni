@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import React, { useEffect, useState } from 'react';
 
 const TrainingCreator = ({fortmatDate}) => {
-  const [selectedOption1, setSelectedOption1] = useState('');
+  const [selectedOption1, setSelectedOption1] = useState('08:00');
   const [selectedOption2, setSelectedOption2] = useState('');
   const [user, setUser] = useState(null);
 
@@ -63,6 +63,7 @@ const TrainingCreator = ({fortmatDate}) => {
         const gotUser = JSON.parse(localStorage.getItem('user'));
         if(gotUser)
         {
+            console.log(gotUser)
             setUser(gotUser);
         }
     } catch (error) {
