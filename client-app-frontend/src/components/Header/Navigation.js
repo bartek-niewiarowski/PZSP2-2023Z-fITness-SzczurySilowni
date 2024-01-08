@@ -56,14 +56,14 @@ function Navigation({items}) {
 
   const checkPermision = (role) => {
     if(loggedUser.access_rights === "ADM") return true;
-    if(loggedUser.access_rights === "PRT" && (role === "USR" || role === "PRT")) return true;
-    if(loggedUser.access_rights === "TRN" && (role === "USR" || role === "TRN")) return true;
-    if(loggedUser.access_rights === "USR" && role === "USR") return true;
+    else if(loggedUser.access_rights === "PRT" && (role === "Klient" || role === "Portier")) return true;
+    else if(loggedUser.access_rights === "TRN" && (role === "Klient" || role === "Trener")) return true;
+    else if(loggedUser.access_rights === "USR" && role === "Klient") return true;
     else return false;
   }
 
   const handleNavigation = (role) => {
-    if (checkPermision()) {
+    if (checkPermision(role)) {
       redirectToRolePage(role);
     } else {
       alert('Brak odpowiednich uprawnień do tej sekcji.');

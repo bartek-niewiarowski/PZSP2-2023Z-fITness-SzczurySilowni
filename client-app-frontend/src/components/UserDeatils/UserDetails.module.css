@@ -14,10 +14,6 @@
 .container > div:first-child {
     margin-left: 20%;
 }
-  
-.container > div:last-child {
-    border-right: none; /* usuń prawą linię dla ostatniego kontenera */
-  }
 
 .view {
     flex: 1;
@@ -26,13 +22,17 @@
 }
 
 .header {
+    display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 24px;
     text-decoration: underline;
 }
 
 .button {
+    display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 30px;
     height: 40px;
     width: 300px;
