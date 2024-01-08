@@ -49,14 +49,14 @@ const Plan = () => {
 
   return (
     <div className="App">
-      <h1>Your Week Calendar</h1>
+      <h1>Twój Kalendarz</h1>
       <br />
-      <h2>Check out this week's training</h2>
+      <h2>Sprawdź plan na ten tydzień</h2>
       <Calendar showDetailsHandle={showDetailsHandle} />
       <br />
-      {showDetails && <Details data={date} />}
+      {showDetails && <div>{date}</div>}
       {showDetails && !isTraining && <TrainingCreator fortmatDate={formatDate}/>}
-      {showDetails && isTraining && <TrainingSession/>}
+      {showDetails && isTraining && <TrainingSession trainingData={trainingData}/>}
     </div>
   );
 }

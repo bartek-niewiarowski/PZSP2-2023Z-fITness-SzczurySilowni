@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TrainingSession = () => {
+const TrainingSession = ({trainingData}) => {
   const cwiczenia = [
     {
       nazwa: 'Przysiady',

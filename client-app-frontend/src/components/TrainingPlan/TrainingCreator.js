@@ -8,6 +8,7 @@ const TrainingCreator = ({fortmatDate}) => {
   const [selectedOption1, setSelectedOption1] = useState('08:00');
   const [selectedOption2, setSelectedOption2] = useState('');
   const [user, setUser] = useState(null);
+  const [trainers, setTrainers] = useState();
 
   const handleOptionChange1 = (event) => {
     setSelectedOption1(event.target.value);
@@ -70,10 +71,24 @@ const TrainingCreator = ({fortmatDate}) => {
       console.error('Error fetching data:', error);
     }
   };
+  const fetchTrainers = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/client/user_api`);
+      const result = await response.json();
+      if (Array.isArray(result)) {
+      await setTrainers(result.filter(obj => obj.access_rights === "TRN"));
+      setSelectedOption2(trainers[0].user_id); 
+    } else {
+      console.error('Error fetching trainers. Data is not an array.');
+    }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
   fetchData();
+  fetchTrainers();
   }, []); // Pusta tablica zależności oznacza, że useEffect zostanie uruchomiony tylko raz (po zamontowaniu komponentu) 
   const hours = ["08:00", "09:00","10:00","11:00","12:00","13:00", "14:00", "15:00", "16:00", "17.00", "18.00", "19.00", "20.00", "21.00"];
-  const coaches = ["Marek Gacek", "Franek Koc", "Arkadiusz Kloc"];
 
   return (
     <div className={styles.container}>
@@ -103,9 +118,9 @@ const TrainingCreator = ({fortmatDate}) => {
               onChange={handleOptionChange2}
               className={styles.input}
             >
-              {coaches.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
+              {trainers && trainers.map((trainer) => (
+                <option key={trainer.user_id} value={trainer.user_id}>
+                  {`${trainer.name} ${trainer.surname}`}
                 </option>
               ))}
             </select>
