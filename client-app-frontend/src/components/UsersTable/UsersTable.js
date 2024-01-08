@@ -3,6 +3,7 @@ import styles from './UsersTable.module.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Regsiter from '../Register/Register';
+import { v4 as uuidv4 } from 'uuid';
 
 const UsersTable = () => {
 
@@ -27,19 +28,86 @@ const UsersTable = () => {
       const response = await fetch(`http://localhost:8000/client/user_api`);
       const result = await response.json();
       setUsers(result);
-      console.log(result);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+  // Generowanie pelnej daty
+  const todayDate = () => {
+    const today = new Date();
+  
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    const hours = today.getHours().toString().padStart(2, '0');
+    const minutes = today.getMinutes().toString().padStart(2, '0');
+    const seconds = today.getSeconds().toString().padStart(2, '0');
+  
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return formattedDate;
+  };
+
+  // Generowanie pelnej daty bez godziny
+  const todayDateGet = () => {
+    const today = new Date();
+  
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+  
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+  
 
   useEffect(() => {
     fetchData();
   }, []); // useEffect runs only once after the component is mounted
 
-  const registerEntry = (userId) => {
-    console.log(`Zarejestrowano użytkownika o ID: ${userId}`);
-  }
+  const registerEntry = async (userId) => {
+    try {
+        userId = parseInt(userId, 10);
+        const today = todayDate()
+        const response = await fetch(`http://localhost:8000/client/training_api?start=${todayDateGet()}&client=${userId}`);
+        const result = await response.json();
+        const incompleteTrainings = result.filter(training => training.end === null);
+        if (incompleteTrainings.length === 0) {
+          // Jeśli brak niezakończonych treningów, dodaj nowy trening
+          const postData = {
+            trainings_id: uuidv4(),
+            start: today,
+            end: null,
+            locker_num: null,
+            client: userId,
+          };
+          postData.trainings_id = parseInt(postData.trainings_id, 10);
+          postData.client = parseInt(postData.client, 10);
+          
+          const response = await fetch('http://localhost:8000/client/training_api', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(postData),
+          });
+  
+          if (response.ok) {
+            // Trening został dodany pomyślnie
+            const result = await response.json();
+            console.log(result);
+            alert('Zarejestrowano wejście użytkownika.');
+          } else {
+            // Obsługa błędu, jeśli wystąpił
+            console.error('Błąd podczas dodawania treningu');
+          }
+        }
+        else {
+          alert('Użytkownik aktualnie znajduje się na siłowni.');
+        }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const registerExit = (userId) => {
     console.log(`Zarejestrowano użytkownika o ID: ${userId}`);
@@ -117,12 +185,12 @@ const UsersTable = () => {
             <td>{user.surname}</td>
             <td>{user.email}</td>
             <td>
-                <button onClick={() => registerEntry(user.id)} className={styles.button}>
+                <button onClick={() => registerEntry(user.user_id)} className={styles.button}>
                   Zarejestruj
                 </button>
             </td>
             <td>
-                <button onClick={() => registerExit(user.id)} className={styles.button}>
+                <button onClick={() => registerExit(user.user_id)} className={styles.button}>
                   Zarejestruj
                 </button>
             </td>
@@ -130,7 +198,6 @@ const UsersTable = () => {
         ))}
       </tbody>
       </table>
-
     </div>
     
   );
