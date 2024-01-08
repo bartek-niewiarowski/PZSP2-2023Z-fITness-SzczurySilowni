@@ -4,7 +4,21 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Regsiter from '../Register/Register';
 import { v4 as uuidv4 } from 'uuid';
-
+/**
+ * User Table.
+ * @component
+ *
+ * Komponent wyswietlajacy liste uzytkownikow
+ * Umozliwia rejestracje wejscia i wyjscia danego uzytkownika
+ * Pod polem id znjaduje sie link do danych konkretnego uzytkownika
+ * Uzywajac przycisku "Dodaj nowego uzytkownika" wyswietla sie okno rejestracji
+ * 
+ * @example
+ *
+ * <UsersTable />
+ *
+ * @returns {JSX.Element}
+ */
 const UsersTable = () => {
 
   const [searchId, setSearchId] = useState('');
@@ -32,6 +46,7 @@ const UsersTable = () => {
       console.error('Error fetching data:', error);
     }
   };
+
   // Generowanie pelnej daty
   const todayDate = () => {
     const today = new Date();
@@ -59,11 +74,11 @@ const UsersTable = () => {
     return formattedDate;
   };
   
-
   useEffect(() => {
     fetchData();
   }, []); // useEffect runs only once after the component is mounted
-
+  
+  // Rejestracja wejscia uzytkownika
   const registerEntry = async (userId) => {
     try {
         userId = parseInt(userId, 10);
@@ -109,8 +124,49 @@ const UsersTable = () => {
     }
   };
 
-  const registerExit = (userId) => {
-    console.log(`Zarejestrowano użytkownika o ID: ${userId}`);
+  const registerExit = async (userId) => {
+    try {
+      userId = parseInt(userId, 10);
+      const today = todayDate()
+      const response = await fetch(`http://localhost:8000/client/training_api?start=${todayDateGet()}&client=${userId}`);
+      const result = await response.json();
+      const incompleteTrainings = result.filter(training => training.end === null);
+      if (incompleteTrainings.length === 1) {
+        // Jeśli brak niezakończonych treningów, dodaj nowy trening
+        const postData = {
+          trainings_id: incompleteTrainings[0].trainings_id,
+          start: incompleteTrainings[0].start,
+          end: today,
+          locker_num: null,
+          client: userId,
+        };
+        postData.trainings_id = parseInt(postData.trainings_id, 10);
+        postData.client = parseInt(postData.client, 10);
+        
+        const response = await fetch(`http://localhost:8000/client/update_training/${incompleteTrainings[0].trainings_id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+        });
+
+        if (response.ok) {
+          // Trening został dodany pomyślnie
+          const result = await response.json();
+          console.log(result);
+          alert('Zarejestrowano wyjście użytkownika.');
+        } else {
+          // Obsługa błędu, jeśli wystąpił
+          console.error('Błąd podczas aktualizacji treningu');
+        }
+      }
+      else {
+        alert('Użytkownik aktualnie nie znajduje się na siłowni.');
+      }
+  } catch (error) {
+    console.error('Error updating data:', error);
+  }
   }
 
   const filteredUsers = users && users.filter(user => {
@@ -190,7 +246,7 @@ const UsersTable = () => {
                 </button>
             </td>
             <td>
-                <button onClick={() => registerExit(user.user_id)} className={styles.button}>
+                <button className={styles.button}>
                   Zarejestruj
                 </button>
             </td>
