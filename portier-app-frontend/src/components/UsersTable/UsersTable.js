@@ -3,21 +3,23 @@ import styles from './UsersTable.module.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+// Komponent implementujacy wyswietlanie wszystkich uzytkownikow
+// Dodatkowo umozliwia rejestracje wejscia i wyjscia uzytkownika
 const UsersTable = ({ users }) => {
 
   const [searchId, setSearchId] = useState('');
   const [searchFirstName, setSearchFirstName] = useState('');
   const [searchLastName, setSearchLastName] = useState('');
   const [searchEmail, setSearchEmail] = useState('');
-
+  // Rejestracja wejscia
   const registerEntry = (userId) => {
     console.log(`Zarejestrowano użytkownika o ID: ${userId}`);
   }
-
+  // Rejestracja wyjscia
   const registerExit = (userId) => {
     console.log(`Zarejestrowano użytkownika o ID: ${userId}`);
   }
-
+  // Filtrowanie uzytkowika na bazie wprowadzonych filtrow
   const filteredUsers = users.filter(user => {
     return (
       user.id.toString().includes(searchId) &&

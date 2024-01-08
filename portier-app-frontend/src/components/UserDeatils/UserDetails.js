@@ -19,7 +19,7 @@ const UserDetails = ({ users }) => {
   const closeConfirmationDialog = () => {
         setIsConfirmationOpen(false);
   }
-
+  // Funkcja usuwajaca uzytkownika z bazy danych
   const handleDelete = (event) => {
     event.preventDefault();
     setIsConfirmationOpen(false);
