@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import styles from "./MyData.module.css";
 
+//Komponent implementujacy wyswietlanie i modyfikacje danych uzytkownika
+//Dane moze modyfikowac Klient lub Portier
 export default function MyData({userId = null}) {
 
     const [userData, setUserData] = useState({
@@ -19,7 +21,7 @@ export default function MyData({userId = null}) {
 
     const [buttonText, setButtonText] = useState("Zatwierdź zmiany");
     
-    
+    // Pobranie poczatkowych danych
     useEffect(() => {
             const fetchData = async () => {
             try {
@@ -36,14 +38,15 @@ export default function MyData({userId = null}) {
           };
           fetchData();
       }, []); // Pusta tablica zależności oznacza, że useEffect zostanie uruchomiony tylko raz (po zamontowaniu komponentu)
-
-    const handleInputChange = (e) => {
+      
+      // Modyfikacja danych uzytkownika na podstawie akcji uzytkownika
+      const handleInputChange = (e) => {
         setUserData({
           ...userData,
           [e.target.name]: e.target.value,
         });
       };
-
+      // Funkcja wykonujaca update danych uzytkownika na bazie danych
       const handleUpdateUser = () => {
         // Wyślij zaktualizowane dane użytkownika na serwer
         fetch(`http://localhost:8000/client/update_user/${userData.user_id}`, {

@@ -4,6 +4,7 @@ import styles from './ImageSplit.module.css';
 import Gym from '../../assets/Gym.png';
 import Text from '../../assets/Text.png';
 
+// Komponent implementujacy wyswietlanie zdjec na stronie startowej
 const ImageSplit = () => {
   return (
     <div className={styles.imageSplitContainer}>

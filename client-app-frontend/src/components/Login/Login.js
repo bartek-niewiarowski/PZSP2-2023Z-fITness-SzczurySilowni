@@ -2,23 +2,22 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 
+// Komponent implementujacy logowanie uzytkownika
 const Login = ({ isVisible, onClose }) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [user, setUser] = useState(null);
   const handleClose = () => {
     onClose();
   };
-
+  // Funkcja realizujaca logowanie, uzytkownik jest zapisywany do localStorage
   const handleLogin = async () => {
     try {    
       const response = await fetch(`http://localhost:8000/client/user_api?email=${username}&password=${password}`);
       const result = await response.json();
       if (result && result.length > 0) {
         const loggedUser = result[0];
-        setUser(loggedUser);
         localStorage.setItem('user', JSON.stringify(loggedUser));
         setMessage('Login completed successfully.');
         setUsername('');
@@ -31,8 +30,6 @@ const Login = ({ isVisible, onClose }) => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-    // Tutaj umieść logikę do sprawdzania poprawności loginu i hasła
-    // np. poprzez wywołanie odpowiedniej funkcji lub API
   };
 
   return (

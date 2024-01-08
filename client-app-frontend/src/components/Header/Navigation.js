@@ -6,7 +6,8 @@ import Register from '../Register/Register.js';
 
 import styles from './Navigation.module.css'; // Import your CSS file
 
-function Navigation({items}) {
+// Komponent implementuje nawigacje w aplikacji
+function Navigation() {
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isRegisterVisible, setIsRegisterVisible] = useState(false);
   const isUserLoggedIn = !!localStorage.getItem('user');
@@ -16,7 +17,7 @@ function Navigation({items}) {
   const handleLoginClick = () => {
     setIsLoginVisible(true);
   };
-
+  // Funkcja obslugujaca wylogowywanie
   const handleLogoutClick = () => {
     localStorage.removeItem('user');
     window.location.reload();
@@ -33,7 +34,7 @@ function Navigation({items}) {
   const handleRegisterClose = () => {
     setIsRegisterVisible(false);
   };
-
+  // Funkcja przekierowujca uzytkownika do wybranej czesci
   const redirectToRolePage = (role) => {
     switch (role) {
       case 'Klient':
@@ -53,7 +54,7 @@ function Navigation({items}) {
         break;
     }
   };
-
+  // Funkcja sprawdzajaca czy uzytkownik ma dostep do danej czesci aplikacji
   const checkPermision = (role) => {
     if(loggedUser.access_rights === "ADM") return true;
     else if(loggedUser.access_rights === "PRT" && (role === "Klient" || role === "Portier")) return true;
@@ -61,7 +62,7 @@ function Navigation({items}) {
     else if(loggedUser.access_rights === "USR" && role === "Klient") return true;
     else return false;
   }
-
+  // Funkcja realizujca nawigacje po 4 glownych modulach aplikacji
   const handleNavigation = (role) => {
     if (checkPermision(role)) {
       redirectToRolePage(role);

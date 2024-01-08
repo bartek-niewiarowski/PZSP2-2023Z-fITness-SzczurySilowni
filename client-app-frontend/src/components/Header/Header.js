@@ -5,6 +5,7 @@ import Navigation from './Navigation.js';
 
 import Logo from '../../assets/Logo.png';
 
+//Komponent implementujacy header aplikacji wyswietlany na gorze strony aplikacji
 const Header = (items) => {
     return (
         <div className={styles.container}>

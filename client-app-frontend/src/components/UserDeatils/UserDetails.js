@@ -7,7 +7,8 @@ import ConfirmBox from '../ConfirmBox/ConfirmBox';
 import { useState } from 'react';
 import Payments from '../MyData/Payments';
 
-const UserDetails = ({ users }) => {
+// Komponent implementujacy modyfikacje danych uzytkownika po stronie Portiera
+const UserDetails = () => {
   const { userId } = useParams();
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);

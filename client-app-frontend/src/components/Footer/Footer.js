@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.css';
 
+// Komponent implementujacy footer aplikacji, zawiera najwazniejsze dane kontaktowe
 const Footer = () => {
   return (
     <footer className={styles.footer}>

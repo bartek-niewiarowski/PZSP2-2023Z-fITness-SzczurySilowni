@@ -1,5 +1,6 @@
 import styles from "./ConfirmBox.module.css";
 
+// Komponent implementujacy uniwersalny komunikat do uzytkownika, zatwierdzenie moze wywolywac wybrane akcje
 export default function ConfirmBox({message, onConfirm, onClose}) {
     return (
     <div className={styles.confirmContainer}>

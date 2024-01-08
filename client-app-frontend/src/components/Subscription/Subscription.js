@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./Subscription.module.css";
 
+// Komponent implementujacy wyswietlenie i wybor aktywnej subskrybcji
 export default function Subscription() {
   const [activeSub, setActiveSub] = useState('');
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);

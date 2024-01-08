@@ -1,5 +1,6 @@
 import styles from "./UserChoose.module.css";
 
+// Komponent implementujacy przechodzenie miedzy widokami w sekcji Klienta
 export default function UserChoose({ options, onChangeView, activeView }) {
   
   const handleViewClick = (view) => {

@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import styles from './Register.module.css';
 import { v4 as uuidv4 } from 'uuid';
 
+// Komponent implementujacy rejestracje uzytkownika
+// Dodanie nowego uzytkownika moze byc realizowane przez Klienta lub Portiera
 const Regsiter = ({isVisible, onClose}) => {
     const [rePassword, setRePassword] = useState('');
     const [message, setMessage] = useState('');
@@ -9,6 +11,7 @@ const Regsiter = ({isVisible, onClose}) => {
         onClose();
     };
 
+    // Przygotowuje komponent do nowej rejestracji po zakonczeniu procesu
     const updateUser = () => {
         setUserData({
             user_id: uuidv4(),
@@ -37,13 +40,14 @@ const Regsiter = ({isVisible, onClose}) => {
         subscription_expiration: null,
         subscription_plan_id: null
       });
+    // Modyfikacja danych na podstawie akcji uzytkownika
     const handleInputChange = (e) => {
     setUserData({
         ...userData,
         [e.target.name]: e.target.value,
     });
     };
-
+    // Funkcja realizujaca rejestracje uzytkownika na bazie danych
     const handleRegister = () => {
         userData.user_id = parseInt(userData.user_id, 10);
         if(userData.password != rePassword) {setMessage("Wprowadzone hasła nie są identyczne")}
