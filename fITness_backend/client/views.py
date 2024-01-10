@@ -75,6 +75,16 @@ class UpdateUserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UpdateTrainingView(APIView):
+    def put(self, request, pk, format=None):
+        training = Trainings.objects.get(trainings_id=pk)
+        serializer = TrainingsSerializer(training, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class DeleteTrainingView(APIView):
     def delete(self, request, pk=None):
         try:
