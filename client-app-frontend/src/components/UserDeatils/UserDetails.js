@@ -31,7 +31,7 @@ const UserDetails = () => {
   return (
       <div>
         <h2 className={styles.header}>Profil użytkownika: {userId}</h2>
-        <MyData/>
+        <MyData userId={userId}/>
         <button className={styles.button} onClick={openConfirmationDialog}>Usuń użytkownika</button>
         {isConfirmationOpen && <ConfirmBox message={`Czy na pewno chcesz usunąć użytkownika o id: ${userId}?`} onConfirm={handleDelete} onClose={closeConfirmationDialog}/>}
       </div>

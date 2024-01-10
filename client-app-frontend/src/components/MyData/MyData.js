@@ -26,7 +26,15 @@ export default function MyData({userId = null}) {
             const fetchData = async () => {
             try {
                 if(userId) {
-                  //Pobierz usera o podanym Id
+                  try {    
+                    const response = await fetch(`http://localhost:8000/client/get_user_by_id/${userId}`);
+                    const result = await response.json();
+                    if (result) {
+                      setUserData(result);
+                    }
+                  } catch (error) {
+                    console.error('Error fetching data:', error);
+                  }
                 }
                 else {
                   const gotUser = JSON.parse(localStorage.getItem('user'));
@@ -57,9 +65,16 @@ export default function MyData({userId = null}) {
           body: JSON.stringify(userData),
         })
           .then(response => response.json())
-          .then(data => console.log('Użytkownik zaktualizowany pomyślnie:', data))
-          .then(localStorage.setItem('user', JSON.stringify(userData)))
-          .then(setButtonText("Dane zostały zaktualizowane"))
+          .then(data => {
+            console.log('Użytkownik zaktualizowany pomyślnie:', data);
+            
+            // Aktualizuj localStorage tylko gdy nie podano userId jako argument
+            if (!userId) {
+              localStorage.setItem('user', JSON.stringify(userData));
+            }
+      
+            setButtonText("Dane zostały zaktualizowane");
+          })
           .catch(error => console.error('Błąd podczas aktualizacji użytkownika:', error));
       };
     return (
