@@ -246,7 +246,7 @@ const UsersTable = () => {
                 </button>
             </td>
             <td>
-                <button className={styles.button}>
+                <button onClick={() => registerExit(user.user_id)}className={styles.button}>
                   Zarejestruj
                 </button>
             </td>
