@@ -85,6 +85,16 @@ class DeleteTrainingView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+class DeleteUserView(APIView):
+    def delete(self, request, pk=None):
+        try:
+            user = Users.objects.get(user_id=pk)
+            user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
 class SubscriptionPlansView(APIView):
     def get(self, request, format=None):
         user_name = request.query_params.get('user_name')
