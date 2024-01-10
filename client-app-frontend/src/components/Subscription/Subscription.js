@@ -4,8 +4,9 @@ import ConfirmBox from "../ConfirmBox/ConfirmBox";
 
 // Komponent implementujacy wyswietlenie i wybor aktywnej subskrybcji
 export default function Subscription() {
-  const [activeSub, setActiveSub] = useState('');
+  const [activeSub, setActiveSub] = useState(null);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isResignOpen, setIsResignOpen] = useState(false);
   const [subscriptionPlans, setSubscriptionPlans] = useState([]);
   const [buttonText, setButtonText] = useState('');
   const [activeSubscription, setActiveSubscription] = useState({
@@ -29,10 +30,6 @@ export default function Subscription() {
   //Zmiana wybranej subskrypcji
   const handleSubChange = (sub) => {
     setActiveSub(sub);
-    setUserData({
-      ...userData,
-      subscription_plan_id: sub,
-    });
   };
   //Update danych uzytkownika
   const UpdateUser = () => {
@@ -54,12 +51,36 @@ export default function Subscription() {
   const openConfirmationDialog = () => {
     setIsConfirmationOpen(true);
   }
+
+  const openResignDialog = () => {
+    setIsResignOpen(true);
+  }
+
+
+  const handleResignConfirm = () => {
+    setActiveSub(null);
+    setUserData({
+      ...userData,
+      subscription_plan_id: null,
+    });
+    UpdateUser();
+    setIsResignOpen(false);
+  }
+
+  const handleResignClose = () => {
+    setIsResignOpen(false);
+  }
+
   //Zamkniecie okna dialogowego
   const handleClose = () => {
     setIsConfirmationOpen(false);
   }
   //Zamkniecie okna dialogowego i update danych uzytkownika
   const handleConfirm = () => {
+    setUserData({
+      ...userData,
+      subscription_plan_id: activeSub,
+    });
     setIsConfirmationOpen(false);
     UpdateUser();
   }
@@ -104,7 +125,7 @@ export default function Subscription() {
   }, [subscriptionPlans, activeSub]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.viewList}>
         {Array.isArray(subscriptionPlans)
           ? subscriptionPlans.map((plan) => (
@@ -122,15 +143,19 @@ export default function Subscription() {
           ))
           : <p>Error: subscriptionPlans is not an array</p>}
       </div>
-      {activeSub !== '' && (
+      {activeSub && (
         <div className={styles.info}>
           <div>{activeSubscription.name}</div>
           <div>Cena pakietu: {activeSubscription.cost}</div>
-          <button className={styles.button} onClick={openConfirmationDialog}>Wybieram ten pakiet</button>
+          {activeSub !== userData.subscription_plan_id && <button className={styles.button} onClick={openConfirmationDialog}>Wybieram ten pakiet</button>}
+          {activeSub === userData.subscription_plan_id && <button className={styles.button} onClick={openResignDialog}>Zrezygnuj z subskrybcji</button>}
         </div>
       )}
       {isConfirmationOpen && (
         <ConfirmBox message={`Czy jesteś pewien że chcesz zmienić pakiet na: ${activeSubscription.name}?`} onClose={handleClose} onConfirm={handleConfirm}/>
+      )}
+      {isResignOpen && (
+        <ConfirmBox message={`Czy jesteś pewien że chcesz zrezygnować z subskrybcji?`} onClose={handleResignClose} onConfirm={handleResignConfirm}/>
       )}
     </div>
   );
