@@ -78,7 +78,7 @@ class UpdateUserView(APIView):
 class DeleteTrainingView(APIView):
     def delete(self, request, pk=None):
         try:
-            training = Trainings.objects.get(trainings_id=pk)
+            training = Trainings.objects.filter(trainings_id=pk)
             training.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except:
@@ -92,6 +92,16 @@ class DeleteUserView(APIView):
             user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class UserByIdView(APIView):
+    def get(self, request, id=None):
+        try:
+            users = Users.objects.get(user_id=id)
+            serializer = UserSerializer(users)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Users.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
