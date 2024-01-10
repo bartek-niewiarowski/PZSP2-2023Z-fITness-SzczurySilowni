@@ -7,8 +7,8 @@ import MyData from '../components/MyData/MyData';
 
 const MyAccount = () => {
 
-  const menu = ["Calendar", "Subsription", "My Data", "My Progress"];
-  const [activeView, setActiveView] = useState("Calendar");
+  const menu = ["Kalendarz", "Mój pakiet", "Moje dane", "Progres"];
+  const [activeView, setActiveView] = useState("Kalendarz");
 
   function onChangeView(view) {
     console.log(view);
@@ -19,9 +19,9 @@ const MyAccount = () => {
   return (
     <Box>
       <UserChoose options={menu} onChangeView={onChangeView} activeView={activeView}/>
-      {activeView == "Calendar" && <Plan/>}
-      {activeView == "Subsription" && <Subsription/>}
-      {activeView == "My Data" && <MyData/>}
+      {activeView == "Kalendarz" && <Plan/>}
+      {activeView == "Mój pakiet" && <Subsription/>}
+      {activeView == "Moje dane" && <MyData/>}
     </Box>
   );
 };

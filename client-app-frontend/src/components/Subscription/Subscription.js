@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "./Subscription.module.css";
+import ConfirmBox from "../ConfirmBox/ConfirmBox";
 
 // Komponent implementujacy wyswietlenie i wybor aktywnej subskrybcji
 export default function Subscription() {
   const [activeSub, setActiveSub] = useState('');
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [subscriptionPlans, setSubscriptionPlans] = useState([]);
-  const [buttonText, setButtonText] = useState('')
+  const [buttonText, setButtonText] = useState('');
   const [activeSubscription, setActiveSubscription] = useState({
     subscription_plan_id: "",
     name: "",
@@ -32,7 +33,6 @@ export default function Subscription() {
       ...userData,
       subscription_plan_id: sub,
     });
-    setButtonText(`Czy jesteś pewien że chcesz zmienić pakiet na: ${activeSubscription.name}?`)
   };
   //Update danych uzytkownika
   const UpdateUser = () => {
@@ -125,20 +125,12 @@ export default function Subscription() {
       {activeSub !== '' && (
         <div className={styles.info}>
           <div>{activeSubscription.name}</div>
-          <div>Price: {activeSubscription.cost}</div>
+          <div>Cena pakietu: {activeSubscription.cost}</div>
           <button className={styles.button} onClick={openConfirmationDialog}>Wybieram ten pakiet</button>
         </div>
       )}
       {isConfirmationOpen && (
-        <div className={styles.confirmContainer}>
-          <div className={styles.confirmBox}>
-            <span className={styles.closeButton} onClick={handleClose}>
-              &times;
-            </span>
-            <div className={styles.question}> {buttonText} </div>
-            <button className={styles.confirmButton} onClick={handleConfirm}>Tak</button>
-          </div>
-        </div>
+        <ConfirmBox message={`Czy jesteś pewien że chcesz zmienić pakiet na: ${activeSubscription.name}?`} onClose={handleClose} onConfirm={handleConfirm}/>
       )}
     </div>
   );

@@ -127,12 +127,12 @@ const Calendar = ({ showDetailsHandle }) => {
       <div className="header row flex-middle">
         <div className="col col-start">
           <div className="icon" onClick={() => changeWeekHandle("prev")}>
-            prev week
+            poprzedni tydzień
           </div>
         </div>
         <div>{currentWeek}</div>
         <div className="col col-end" onClick={() => changeWeekHandle("next")}>
-          <div className="icon">next week</div>
+          <div className="icon">następny tydzień</div>
         </div>
       </div>
     );

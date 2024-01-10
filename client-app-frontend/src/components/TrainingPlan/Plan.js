@@ -1,7 +1,6 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
 import Calendar from "./Calendar";
-import Details from "./Details";
 import TrainingCreator from "./TrainingCreator";
 import TrainingSession from "./TrainingSession";
 
