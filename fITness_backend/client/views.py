@@ -75,13 +75,43 @@ class UpdateUserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UpdateTrainingView(APIView):
+    def put(self, request, pk, format=None):
+        training = Trainings.objects.get(trainings_id=pk)
+        serializer = TrainingsSerializer(training, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class DeleteTrainingView(APIView):
     def delete(self, request, pk=None):
         try:
-            training = Trainings.objects.get(trainings_id=pk)
+            training = Trainings.objects.filter(trainings_id=pk)
             training.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class DeleteUserView(APIView):
+    def delete(self, request, pk=None):
+        try:
+            user = Users.objects.get(user_id=pk)
+            user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class UserByIdView(APIView):
+    def get(self, request, id=None):
+        try:
+            users = Users.objects.get(user_id=id)
+            serializer = UserSerializer(users)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Users.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
