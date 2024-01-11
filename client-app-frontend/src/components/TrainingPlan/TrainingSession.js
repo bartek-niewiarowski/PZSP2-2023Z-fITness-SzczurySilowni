@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import styles from './TrainingSession.module.css';
+import ExerciseForm from './ExerciseForm';
 
 const TrainingSession = ({ trainingData, isTrainer }) => {
   const [exercises, setExercises] = useState([
@@ -39,6 +40,7 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
   ]);
   const [canDelete, setCanDelete] = useState(true);
   const [canComment, setCanComment] = useState(true);
+  const [addExercise, setAddExercise] = useState(true);
   const [comment, setComment] = useState(trainingData.comment);
 
   // Funkcja do pobierania ćwiczeń na podstawie appointment_id (do implementacji)
@@ -76,7 +78,11 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
   }
 
   const handleAddExercise = () => {
-    
+    setAddExercise(true);
+  }
+
+  const handleClose = () => {
+    setAddExercise(false);
   }
 
   useEffect(() => {
@@ -113,6 +119,7 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
               Dodaj ćwiczenie
             </button>
           )}
+      {addExercise && (<ExerciseForm onCancel={handleClose}/>)}
       {canComment && (
           <div className={styles.flexContainer}>
             <textarea
