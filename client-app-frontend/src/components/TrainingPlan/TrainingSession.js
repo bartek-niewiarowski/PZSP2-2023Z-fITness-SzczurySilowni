@@ -38,6 +38,8 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
     },
   ]);
   const [canDelete, setCanDelete] = useState(true);
+  const [canComment, setCanComment] = useState(true);
+  const [comment, setComment] = useState(trainingData.comment);
 
   // Funkcja do pobierania ćwiczeń na podstawie appointment_id (do implementacji)
   const fetchData = async () => {
@@ -49,8 +51,10 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
           setExercises(result);
 
           const startDate = new Date(trainingData.planned_start);
+          const endDate = new Date(trainingData.planned_end);
           const currentDate = new Date();
           setCanDelete(isTrainer && startDate.getTime() > currentDate.getTime());
+          setCanComment(isTrainer && endDate.getTime() < currentDate.getTime());          
         }
       }
     } catch (error) {
@@ -62,6 +66,18 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
     // Implementuj logikę usuwania treningu (do implementacji)
     console.log('Usunięcie treningu');
   };
+
+  const handleCancelTraining = () => {
+    console.log('Odwolanie treningu');
+  }
+
+  const handleAddComment = () => {
+    
+  }
+
+  const handleAddExercise = () => {
+    
+  }
 
   useEffect(() => {
     //fetchData();
@@ -87,6 +103,29 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
           <hr />
         </div>
       ))}
+      {canDelete && (
+            <button onClick={handleCancelTraining} className={styles.button}>
+              Odwołaj trening
+            </button>
+          )}
+      {canDelete && (
+            <button onClick={handleAddExercise} className={styles.button}>
+              Dodaj ćwiczenie
+            </button>
+          )}
+      {canComment && (
+          <div className={styles.flexContainer}>
+            <textarea
+                placeholder="Dodaj komentarz..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className={styles.textarea}
+            />
+            <button onClick={handleAddComment} className={styles.comment}>
+                Dodaj komentarz
+            </button>
+          </div>
+      )}
     </div>
   );
 };
