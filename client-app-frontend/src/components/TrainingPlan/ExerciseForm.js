@@ -39,30 +39,28 @@ const ExerciseForm = ({ isVisible, onCancel }) => {
 
   return (
     <div className={isVisible ? styles.loginContainer : styles.hidden}>
-      <div className={`${styles.formContainer} ${styles.loginBox}`}>
+      <div className= {styles.loginBox}>
         <span className={styles.closeButton} onClick={onCancel}>&times;</span>
         <h1 className={styles.title}>Dodaj Ćwiczenie</h1>
-        <form onSubmit={handleSubmit}>
-          <label className={styles.label}>
+        <form onSubmit={handleSubmit} className={styles.formContainer}>
+          <label className={styles.label}/>
             Nazwa ćwiczenia:
             <input
               type="text"
               value={exerciseName}
               onChange={(e) => setExerciseName(e.target.value)}
-              className={`${styles.textBox} ${styles.input}`}
+              className={styles.input}
             />
-          </label>
 
-          <label className={styles.label}>
+          <label className={styles.label}/>
             Opis ćwiczenia:
             <textarea
               value={exerciseDescription}
               onChange={(e) => setExerciseDescription(e.target.value)}
-              className={`${styles.textBox} ${styles.input}`}
+              className={styles.input}
             />
-          </label>
 
-          <label className={styles.label}>
+          <label className={styles.label}/>
             Ilość serii:
             <input
               type="number"
@@ -70,27 +68,24 @@ const ExerciseForm = ({ isVisible, onCancel }) => {
               onChange={(e) => setExerciseSets(parseInt(e.target.value, 10))}
               className={`${styles.textBox} ${styles.input}`}
             />
-          </label>
 
-          <label className={styles.label}>
+          <label className={styles.label}/>
             Ciężar:
             <input
               type="text"
               value={exerciseWeight}
               onChange={(e) => setExerciseWeight(e.target.value)}
-              className={`${styles.textBox} ${styles.input}`}
+              className={styles.input}
             />
-          </label>
 
-          <label className={styles.label}>
+          <label className={styles.label}/>
             Ilość powtórzeń:
             <input
               type="number"
               value={exerciseRepetitions}
               onChange={(e) => setExerciseRepetitions(parseInt(e.target.value, 10))}
-              className={`${styles.textBox} ${styles.input}`}
+              className={styles.input}
             />
-          </label>
 
           <button type="submit" className={`${styles.button} ${styles.input}`}>
             Dodaj Ćwiczenie

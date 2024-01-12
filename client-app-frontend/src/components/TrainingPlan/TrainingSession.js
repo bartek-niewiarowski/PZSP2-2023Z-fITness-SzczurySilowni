@@ -40,7 +40,7 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
   ]);
   const [canDelete, setCanDelete] = useState(true);
   const [canComment, setCanComment] = useState(true);
-  const [addExercise, setAddExercise] = useState(true);
+  const [addExercise, setAddExercise] = useState(false);
   const [comment, setComment] = useState(trainingData.comment);
 
   // Funkcja do pobierania ćwiczeń na podstawie appointment_id (do implementacji)

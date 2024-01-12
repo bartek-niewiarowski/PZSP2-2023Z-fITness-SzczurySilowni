@@ -8,7 +8,7 @@
     font-size: 20px;
     background-color: black;
     border-radius: 5px;
-    gap: 30px;
+    margin-right: 30px;
 }
 
 .button:hover {
@@ -20,8 +20,8 @@
 }
 
 .comment {
-    height: 30px;
-    width: auto;
+    height: 40px;
+    width: auto + 30px;
     font-size: 12px;
     color: white;
     font-weight: bold;
