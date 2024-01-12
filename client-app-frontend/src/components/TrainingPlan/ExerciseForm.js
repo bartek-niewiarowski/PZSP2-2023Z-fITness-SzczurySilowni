@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from '../Register/Register.module.css';
 
-const ExerciseForm = ({ onCancel }) => {
+const ExerciseForm = ({ isVisible, onCancel }) => {
   const [exerciseName, setExerciseName] = useState('');
   const [exerciseDescription, setExerciseDescription] = useState('');
   const [exerciseSets, setExerciseSets] = useState(1);
@@ -38,7 +38,7 @@ const ExerciseForm = ({ onCancel }) => {
   };
 
   return (
-    <div className={`${styles.loginContainer} ${styles.hidden}`}>
+    <div className={isVisible ? styles.loginContainer : styles.hidden}>
       <div className={`${styles.formContainer} ${styles.loginBox}`}>
         <span className={styles.closeButton} onClick={onCancel}>&times;</span>
         <h1 className={styles.title}>Dodaj Ćwiczenie</h1>

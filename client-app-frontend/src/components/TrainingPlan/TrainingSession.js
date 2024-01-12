@@ -119,7 +119,7 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
               Dodaj ćwiczenie
             </button>
           )}
-      {addExercise && (<ExerciseForm onCancel={handleClose}/>)}
+      <ExerciseForm onCancel={handleClose} isVisible={addExercise}/>
       {canComment && (
           <div className={styles.flexContainer}>
             <textarea
