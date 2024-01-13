@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import styles from "./Subscription.module.css";
 import ConfirmBox from "../ConfirmBox/ConfirmBox";
 
-// Komponent implementujacy wyswietlenie i wybor aktywnej subskrybcji
+/**
+ * Subscription Component
+ * 
+ * Komponent implementujący wybór i zarządzanie aktywną subskrypcją użytkownika.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący interfejs subskrypcji.
+ */
 export default function Subscription() {
   const [activeSub, setActiveSub] = useState(null);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -27,13 +34,19 @@ export default function Subscription() {
     subscription_expiration: null,
     subscription_plan_id: null
   });
-  //Zmiana wybranej subskrypcji
+  /**
+   * Funkcja do zmiany wybranej subskrypcji.
+   * @param {string} sub - Id wybranej subskrypcji.
+   * @returns {void}
+   */
   const handleSubChange = (sub) => {
     setActiveSub(sub);
   };
-  //Update danych uzytkownika
+  /**
+   * Funkcja do aktualizacji danych użytkownika.
+   * @returns {void}
+   */
   const UpdateUser = () => {
-    // Wyślij zaktualizowane dane użytkownika na serwer
     fetch(`http://localhost:8000/client/update_user/${userData.user_id}`, {
       method: 'PUT',
       headers: {
@@ -47,7 +60,7 @@ export default function Subscription() {
       .then(setButtonText(`Zmieniono subskrypcję na: ${activeSubscription.name}.`))
       .catch(error => console.error('Błąd podczas aktualizacji użytkownika:', error));
   };
-  //Otwarcie okna dialogowego
+
   const openConfirmationDialog = () => {
     setIsConfirmationOpen(true);
   }
@@ -55,7 +68,6 @@ export default function Subscription() {
   const openResignDialog = () => {
     setIsResignOpen(true);
   }
-
 
   const handleResignConfirm = () => {
     setActiveSub(null);

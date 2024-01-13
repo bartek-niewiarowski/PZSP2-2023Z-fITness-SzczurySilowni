@@ -3,6 +3,14 @@ import styles from './TrainingCreator.module.css';
 
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Komponent reprezentujący formularz do planowania treningu.
+ *
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {function} props.fortmatDate - Funkcja do formatowania daty.
+ * @returns {JSX.Element} - Zwraca element JSX reprezentujący formularz planowania treningu.
+ */
 const TrainingCreator = ({ fortmatDate }) => {
   const [selectedOption1, setSelectedOption1] = useState('08:00');
   const [selectedOption2, setSelectedOption2] = useState('');
@@ -12,6 +20,11 @@ const TrainingCreator = ({ fortmatDate }) => {
   const [trainers, setTrainers] = useState([]);
   const [gyms, setGyms] = useState([]);
 
+  /**
+   * Generuje losową sześciocyfrową liczbę.
+   *
+   * @returns {number} - Sześciocyfrowa liczba.
+   */
   const generateSixDigitId = () => {
     return Math.floor(100000 + Math.random() * 900000); // Losowa liczba od 100000 do 999999
   };
@@ -32,7 +45,12 @@ const TrainingCreator = ({ fortmatDate }) => {
     setSelectedOption4(event.target.value);
   };
 
-  // Dodanie nowego spotkania
+  /**
+   * Obsługuje złożenie formularza i dodanie nowego spotkania.
+   *
+   * @param {Object} e - Obiekt zdarzenia submit.
+   * @returns {void}
+   */
   const handleFormSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -77,7 +95,11 @@ const TrainingCreator = ({ fortmatDate }) => {
     }
   };
 
-  // Pobranie danych o zalogowanym użytkowniku i trenerach
+  /**
+   * Pobiera dane o zalogowanym użytkowniku, trenerach i siłowniach po zamontowaniu komponentu.
+   *
+   * @returns {void}
+   */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -123,7 +145,7 @@ const TrainingCreator = ({ fortmatDate }) => {
     fetchData();
     fetchTrainers();
     fetchGyms();
-  }, []); // Dodano trainers do zależności useEffect
+  }, []);
 
   const hours = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17.00", "18.00", "19.00", "20.00", "21.00"];
 
@@ -131,7 +153,6 @@ const TrainingCreator = ({ fortmatDate }) => {
     <div className={styles.container}>
       <form onSubmit={handleFormSubmit}>
         <div className={styles.choose}>
-          {/* Pierwsza picklista */}
           <label className={styles.label}>
             Wybierz Godzinę Startu:
             <select
@@ -162,7 +183,6 @@ const TrainingCreator = ({ fortmatDate }) => {
             </select>
           </label>
 
-          {/* Druga picklista */}
           <label className={styles.label}>
             Wybierz Trenera:
             <select

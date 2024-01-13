@@ -1,14 +1,33 @@
 import { useState } from "react";
 import styles from '../Register/Register.module.css';
 
+/**
+ * Komponent formularza do dodawania nowego ćwiczenia do planu treningowego.
+ *
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {boolean} props.isVisible - Flaga określająca widoczność formularza.
+ * @param {Function} props.onCancel - Funkcja obsługująca anulowanie dodawania ćwiczenia.
+ * @param {number} props.trainingId - Identyfikator treningu, do którego dodawane jest ćwiczenie.
+ * @returns {JSX.Element} - Zwraca element JSX reprezentujący formularz dodawania ćwiczenia.
+ */
 const ExerciseForm = ({ isVisible, onCancel, trainingId }) => {
   const [exerciseName, setExerciseName] = useState(null);
   const [exerciseEquipment, setExerciseEquipment] = useState(null);
-
+  /**
+   * Generuje unikalny identyfikator ćwiczenia składający się z sześciu cyfr.
+   *
+   * @returns {number} - Unikalny identyfikator ćwiczenia.
+   */
   const generateSixDigitId = () => {
     return Math.floor(100000 + Math.random() * 900000); // Losowa liczba od 100000 do 999999
   };
-
+  /**
+   * Obsługuje przesłanie formularza do dodania nowego ćwiczenia.
+   *
+   * @param {Event} e - Obiekt zdarzenia formularza.
+   * @returns {void}
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
 

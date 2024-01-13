@@ -6,6 +6,12 @@ import Subsription from '../components/Subscription/Subscription';
 import MyData from '../components/MyData/MyData';
 import Progress from '../components/Progress/Progress';
 
+/**
+ * Komponent reprezentujący stronę konta użytkownika.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący interfejs strony konta użytkownika.
+ */
 const MyAccount = () => {
 
   const menu = ["Kalendarz", "Mój pakiet", "Moje dane", "Progres"];

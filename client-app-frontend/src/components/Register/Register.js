@@ -2,8 +2,17 @@ import React, {useState} from "react";
 import styles from './Register.module.css';
 import { v4 as uuidv4 } from 'uuid';
 
-// Komponent implementujacy rejestracje uzytkownika
-// Dodanie nowego uzytkownika moze byc realizowane przez Klienta lub Portiera
+/**
+ * Register Component
+ * 
+ * Komponent implementujący formularz rejestracji użytkownika.
+ * 
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {boolean} props.isVisible - Określa, czy komponent jest widoczny.
+ * @param {Function} props.onClose - Funkcja zamykająca komponent.
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący formularz rejestracji.
+ */
 const Regsiter = ({isVisible, onClose}) => {
     const [rePassword, setRePassword] = useState('');
     const [message, setMessage] = useState('');

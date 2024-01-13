@@ -4,6 +4,12 @@ import Calendar from "./Calendar";
 import TrainingCreator from "./TrainingCreator";
 import TrainingSession from "./TrainingSession";
 
+/**
+ * Komponent reprezentujący plan treningowy użytkownika.
+ *
+ * @component
+ * @returns {JSX.Element} - Zwraca element JSX reprezentujący plan treningowy.
+ */
 const Plan = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [date, setData] = useState(null);
@@ -18,13 +24,22 @@ const Plan = () => {
     gym: null,
     training: null,
   });
-
+  /**
+   * Obsługuje wywołanie wyświetlenia szczegółów treningu dla wybranego dnia.
+   *
+   * @param {string} dayStr - Data w formacie stringa.
+   * @returns {void}
+   */
   const showDetailsHandle = (dayStr) => {
     setData(dayStr);
     fetchData();
     setShowDetails(true);
   };
-
+  /**
+   * Formatuje aktualną datę do postaci używanej w zapytaniach do API.
+   *
+   * @returns {string} - Sformatowana data.
+   */
   const formatDate = () => {
     const dateObject = new Date(date);
     const day = dateObject.getDate();
@@ -33,7 +48,11 @@ const Plan = () => {
     const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
     return formattedDate;  
   }
-
+  /**
+   * Pobiera dane dotyczące treningu dla aktualnej daty.
+   *
+   * @returns {void}
+   */
   const fetchData = async () => {
     const formattedDate = formatDate();
     const user = JSON.parse(localStorage.getItem('user'));

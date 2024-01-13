@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Progress.module.css'
 
+
+/**
+ * Progress Component
+ * 
+ * Komponent implementujący wybór miesiąca i roku do monitorowania postępów użytkownika.
+ * 
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {string} props.userId - Identyfikator użytkownika, dla którego monitorowane są postępy.
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący wybór miesiąca i roku.
+ */
 const Progress = ({userId}) => {
   const months = [
     'Styczeń', 'Luty', 'Marzec', 'Kwiecień',

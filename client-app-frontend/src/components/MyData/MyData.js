@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react"
 import styles from "./MyData.module.css";
 
-//Komponent implementujacy wyswietlanie i modyfikacje danych uzytkownika
-//Dane moze modyfikowac Klient lub Portier
+/**
+ * MyData Component
+ * 
+ * Komponent implementujący wyświetlanie i modyfikacje danych użytkownika.
+ * Dane mogą być modyfikowane przez klienta lub portiera.
+ * 
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {string} props.userId - Identyfikator użytkownika do pobrania i wyświetlenia danych (opcjonalny).
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący formularz modyfikacji danych użytkownika.
+ */
 export default function MyData({userId = null}) {
 
     const [userData, setUserData] = useState({

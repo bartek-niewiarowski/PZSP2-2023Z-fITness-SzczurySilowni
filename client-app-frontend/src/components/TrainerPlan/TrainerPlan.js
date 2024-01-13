@@ -3,17 +3,34 @@ import { useEffect, useState } from "react";
 import Calendar from "../TrainingPlan/Calendar";
 import Training from "./Training";
 
+/**
+ * TrainerPlan Component
+ * 
+ * Komponent implementujący widok kalendarza trenera z planem treningów.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący kalendarz trenera.
+ */
 const TrainerPlan = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [date, setData] = useState(null);
   const [trainingData, setTrainingData] = useState([]);
-
+  /**
+   * Obsługa kliknięcia na dzień w kalendarzu.
+   *
+   * @param {string} dayStr - Data wybranego dnia.
+   * @returns {void}
+   */
   const showDetailsHandle = (dayStr) => {
     setData(dayStr);
     fetchData();
     setShowDetails(true);
   };
-
+  /**
+   * Formatuje aktualną datę do postaci "YYYY-MM-DD".
+   *
+   * @returns {string} - Sformatowana data.
+   */
   const formatDate = () => {
     const dateObject = new Date(date);
     const day = dateObject.getDate();
@@ -22,7 +39,11 @@ const TrainerPlan = () => {
     const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
     return formattedDate;  
   }
-
+  /**
+   * Pobiera dane o treningach dla wybranego dnia i trenera.
+   *
+   * @returns {void}
+   */
   const fetchData = async () => {
     const formattedDate = formatDate();
     const user = JSON.parse(localStorage.getItem('user'));

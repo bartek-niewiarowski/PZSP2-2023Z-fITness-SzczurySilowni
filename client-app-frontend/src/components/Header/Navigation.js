@@ -6,7 +6,14 @@ import Register from '../Register/Register.js';
 
 import styles from './Navigation.module.css'; // Import your CSS file
 
-// Komponent implementuje nawigacje w aplikacji
+/**
+ * Navigation Component
+ * 
+ * Komponent implementujący nawigację w aplikacji.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący nawigację z linkami i funkcjonalnością logowania.
+ */
 function Navigation() {
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isRegisterVisible, setIsRegisterVisible] = useState(false);
