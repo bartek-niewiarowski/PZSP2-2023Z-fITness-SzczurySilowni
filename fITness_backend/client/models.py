@@ -7,7 +7,7 @@ class Appointments(models.Model):
     planned_end = models.DateTimeField()
     comment = models.CharField(max_length=500, blank=True, null=True)
     trainer = models.ForeignKey('Users', models.DO_NOTHING, db_column='trainer')
-    clinet = models.ForeignKey('Users', models.DO_NOTHING, db_column='clinet', related_name='appointments_clinet_set')
+    client = models.ForeignKey('Users', models.DO_NOTHING, db_column='client', related_name='appointments_client_set')
     gym = models.ForeignKey('Gyms', models.DO_NOTHING, db_column='gym')
     training = models.ForeignKey('Trainings', models.DO_NOTHING, db_column='training', blank=True, null=True)
 
