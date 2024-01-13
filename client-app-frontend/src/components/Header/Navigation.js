@@ -88,7 +88,7 @@ function Navigation() {
             <a onClick={handleLogoutClick} className={styles.listItem}>
             Wyloguj sie
             </a>
-            <li className={styles.listItem}>
+            {loggedUser.access_rights !== "USR" && <li className={styles.listItem}>
               <div className={styles.roleDropdown}>
                 <span>Przejdź do:</span>
                 <select onChange={(e) => handleNavigation(e.target.value)} className={styles.roleDropdown}>
@@ -98,7 +98,7 @@ function Navigation() {
                   <option value="Administrator">Administrator</option>
                 </select>
               </div>
-            </li>
+            </li>}
           </>}
           { !isUserLoggedIn &&
           <>

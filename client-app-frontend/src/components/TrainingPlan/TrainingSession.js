@@ -4,42 +4,9 @@ import styles from './TrainingSession.module.css';
 import ExerciseForm from './ExerciseForm';
 
 const TrainingSession = ({ gotTrainingData, isTrainer }) => {
-  const [exercises, setExercises] = useState([
-    {
-      exercise_id: 1,
-      name: 'Przysiady',
-      description: 'Podstawowe ćwiczenie siłowe angażujące wiele grup mięśniowych.',
-      sets: 3,
-      weight: '60 kg',
-      repetitions: 12,
-    },
-    {
-      exercise_id: 2,
-      name: 'Wyciskanie sztangi leżąc',
-      description: 'Ćwiczenie rozwoju mięśni klatki piersiowej.',
-      sets: 4,
-      weight: '80 kg',
-      repetitions: 10,
-    },
-    {
-      exercise_id: 3,
-      name: 'Martwy ciąg',
-      description: 'Skomplikowane ćwiczenie angażujące wiele grup mięśniowych, zwłaszcza plecy i nogi.',
-      sets: 3,
-      weight: '100 kg',
-      repetitions: 8,
-    },
-    {
-      exercise_id: 4,
-      name: 'Podciąganie na drążku',
-      description: 'Ćwiczenie wzmacniające mięśnie pleców.',
-      sets: 3,
-      weight: 'Ciążar ciała',
-      repetitions: 10,
-    },
-  ]);
-  const [canDelete, setCanDelete] = useState(true);
-  const [canComment, setCanComment] = useState(true);
+  const [exercises, setExercises] = useState([]);
+  const [canDelete, setCanDelete] = useState(false);
+  const [canComment, setCanComment] = useState(false);
   const [addExercise, setAddExercise] = useState(false);
   const [trainingData, setTrainingData] = useState(gotTrainingData);
 
@@ -47,17 +14,16 @@ const TrainingSession = ({ gotTrainingData, isTrainer }) => {
   const fetchData = async () => {
     try {
       if (trainingData && trainingData.appointment_id) {
-        const response = await fetch(`http://localhost:8000/client/exercises_api/${trainingData.appointment_id}`);
+        const response = await fetch(`http://localhost:8000/trainer/get_exercises?training_id=${trainingData.appointment_id}`);
         const result = await response.json();
         if (result) {
           setExercises(result);
-
-          const startDate = new Date(trainingData.planned_start);
-          const endDate = new Date(trainingData.planned_end);
-          const currentDate = new Date();
-          setCanDelete(isTrainer && startDate.getTime() > currentDate.getTime());
-          setCanComment(isTrainer && endDate.getTime() < currentDate.getTime());          
         }
+        const startDate = new Date(trainingData.planned_start);
+        const endDate = new Date(trainingData.planned_end);
+        const currentDate = new Date();
+        setCanDelete(isTrainer && startDate.getTime() > currentDate.getTime());
+        setCanComment(isTrainer && endDate.getTime() < currentDate.getTime());          
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -121,8 +87,8 @@ const TrainingSession = ({ gotTrainingData, isTrainer }) => {
   }
 
   useEffect(() => {
-    //fetchData();
-  }, [trainingData, isTrainer]); // Pusta tablica zależności oznacza, że useEffect zostanie uruchomiony tylko raz (po zamontowaniu komponentu)
+    fetchData();
+  }, []); // Pusta tablica zależności oznacza, że useEffect zostanie uruchomiony tylko raz (po zamontowaniu komponentu)
 
   return (
     <div>
@@ -132,10 +98,7 @@ const TrainingSession = ({ gotTrainingData, isTrainer }) => {
       {exercises.map((exercise) => (
         <div key={exercise.exercise_id}>
           <h2>{exercise.name}</h2>
-          <p><strong>Opis:</strong> {exercise.description}</p>
-          <p><strong>Ilość serii:</strong> {exercise.sets}</p>
-          <p><strong>Ciężar:</strong> {exercise.weight}</p>
-          <p><strong>Ilość powtórzeń:</strong> {exercise.repetitions}</p>
+          <p><strong>Id maszyny:</strong> {exercise.equipment}</p>
           {canDelete && (
             <button onClick={handleDeleteExercise} className={styles.button}>
               Usuń ćwiczenie
@@ -154,7 +117,7 @@ const TrainingSession = ({ gotTrainingData, isTrainer }) => {
               Dodaj ćwiczenie
             </button>
           )}
-      <ExerciseForm onCancel={handleClose} isVisible={addExercise}/>
+      <ExerciseForm onCancel={handleClose} isVisible={addExercise} trainingId={trainingData.appointment_id}/>
       {canComment && (
           <div className={styles.flexContainer}>
             <textarea

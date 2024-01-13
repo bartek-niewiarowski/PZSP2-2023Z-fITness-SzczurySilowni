@@ -1,40 +1,56 @@
 import { useState } from "react";
 import styles from '../Register/Register.module.css';
 
-const ExerciseForm = ({ isVisible, onCancel }) => {
-  const [exerciseName, setExerciseName] = useState('');
-  const [exerciseDescription, setExerciseDescription] = useState('');
-  const [exerciseSets, setExerciseSets] = useState(1);
-  const [exerciseWeight, setExerciseWeight] = useState('');
-  const [exerciseRepetitions, setExerciseRepetitions] = useState(1);
+const ExerciseForm = ({ isVisible, onCancel, trainingId }) => {
+  const [exerciseName, setExerciseName] = useState(null);
+  const [exerciseEquipment, setExerciseEquipment] = useState(null);
 
-  const handleSubmit = (e) => {
+  const generateSixDigitId = () => {
+    return Math.floor(100000 + Math.random() * 900000); // Losowa liczba od 100000 do 999999
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Walidacja pól formularza, możesz dostosować do własnych potrzeb
-    if (!exerciseName || !exerciseDescription || !exerciseWeight) {
+    if (!exerciseName || !exerciseEquipment) {
       alert('Proszę wypełnić wszystkie pola formularza.');
       return;
     }
 
-    // Tworzenie obiektu ćwiczenia
-    const newExercise = {
-      name: exerciseName,
-      description: exerciseDescription,
-      sets: exerciseSets,
-      weight: exerciseWeight,
-      repetitions: exerciseRepetitions,
-    };
-
-    // Przekazanie nowego ćwiczenia do funkcji nadrzędnej
+    try{
+      const newExercise = {
+        exercise_id: generateSixDigitId(),
+        name: exerciseName,
+        training: trainingId,
+        equipment: exerciseEquipment
+      };
+      console.log(JSON.stringify(newExercise));
+     newExercise.equipment = parseInt(newExercise.equipment, 10);
+     newExercise.training = parseInt(newExercise.training, 10);
+      const response = await fetch('http://localhost:8000/trainer/get_exercises', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newExercise),
+      });
+      if (response.ok) {
+        // Spotkanie zostało dodane pomyślnie
+        const result = await response.json();
+        console.log(result);
+      } else {
+        // Obsługa błędu, jeśli wystąpił
+        console.error('Błąd podczas dodawania spotkania');
+      }
+    } catch (error) {
+      console.error('Error adding Appointment:', error);
+    }
     onCancel();
 
     // Zresetowanie stanu formularza po dodaniu ćwiczenia
     setExerciseName('');
-    setExerciseDescription('');
-    setExerciseSets(1);
-    setExerciseWeight('');
-    setExerciseRepetitions(1);
+    setExerciseEquipment(null);
   };
 
   return (
@@ -51,43 +67,15 @@ const ExerciseForm = ({ isVisible, onCancel }) => {
               onChange={(e) => setExerciseName(e.target.value)}
               className={styles.input}
             />
-
           <label className={styles.label}/>
-            Opis ćwiczenia:
-            <textarea
-              value={exerciseDescription}
-              onChange={(e) => setExerciseDescription(e.target.value)}
-              className={styles.input}
-            />
-
-          <label className={styles.label}/>
-            Ilość serii:
+            Id maszyny:
             <input
               type="number"
-              value={exerciseSets}
-              onChange={(e) => setExerciseSets(parseInt(e.target.value, 10))}
-              className={`${styles.textBox} ${styles.input}`}
-            />
-
-          <label className={styles.label}/>
-            Ciężar:
-            <input
-              type="text"
-              value={exerciseWeight}
-              onChange={(e) => setExerciseWeight(e.target.value)}
+              value={exerciseEquipment}
+              onChange={(e) => setExerciseEquipment(e.target.value)}
               className={styles.input}
             />
-
-          <label className={styles.label}/>
-            Ilość powtórzeń:
-            <input
-              type="number"
-              value={exerciseRepetitions}
-              onChange={(e) => setExerciseRepetitions(parseInt(e.target.value, 10))}
-              className={styles.input}
-            />
-
-          <button type="submit" className={`${styles.button} ${styles.input}`}>
+          <button type="submit" className={styles.button}>
             Dodaj Ćwiczenie
           </button>
         </form>
