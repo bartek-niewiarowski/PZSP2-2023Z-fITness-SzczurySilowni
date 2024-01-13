@@ -31,3 +31,14 @@ class AppointmentsForTrainerView(APIView):
             appointments = Appointments.objects.all()
         serializer = AppointmentsSerializer(appointments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UpdateAppointmentView(APIView):
+    def put(self, request, pk, format=None):
+        training = Appointments.objects.get(appointment_id=pk)
+        serializer = AppointmentsSerializer(training, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
