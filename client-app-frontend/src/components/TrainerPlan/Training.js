@@ -9,7 +9,8 @@ const Training = ({ training }) => {
     setIsExpanded(!isExpanded);
   };
 
-  const formatTime = (date) => {
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 

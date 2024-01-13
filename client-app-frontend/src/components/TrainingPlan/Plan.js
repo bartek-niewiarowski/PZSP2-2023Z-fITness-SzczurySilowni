@@ -7,16 +7,16 @@ import TrainingSession from "./TrainingSession";
 const Plan = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [date, setData] = useState(null);
-  const [isTraining, setIsTraining] = useState(true);
+  const [isTraining, setIsTraining] = useState(false);
   const [trainingData, setTrainingData] = useState({
-    appointment_id: 1,
-    planned_start: new Date('2024-01-15T10:00:00Z'),
-    planned_end: new Date('2024-01-15T12:00:00Z'),
-    comment: 'Spotkanie treningowe',
-    trainer: 2,
-    client: 3,
-    gym: 4,
-    training: 5,
+    appointment_id: null,
+    planned_start: null,
+    planned_end: null,
+    comment: '',
+    trainer: null,
+    client: null,
+    gym: null,
+    training: null,
   });
 
   const showDetailsHandle = (dayStr) => {
@@ -40,8 +40,9 @@ const Plan = () => {
     
     try {
       if (user && user.user_id) {
-        const response = await fetch(`http://localhost:8000/client/appointments_api?date=${formattedDate}&client=${user.user_id}`);
+        const response = await fetch(`http://localhost:8000/trainer/get_appointment_client?client=${user.user_id}&date=${formattedDate}`);
         const result = await response.json();
+        console.log(result);
         
         if (result && result.length > 0) {
           setIsTraining(true);
@@ -57,7 +58,7 @@ const Plan = () => {
   };
 
   useEffect(() => {
-    //fetchData();
+    fetchData();
   }, []); // Pusta tablica zależności oznacza, że useEffect zostanie uruchomiony tylko raz (po zamontowaniu komponentu)
 
   return (
@@ -69,7 +70,7 @@ const Plan = () => {
       <br />
       {showDetails && <div>{date}</div>}
       {showDetails && !isTraining && <TrainingCreator fortmatDate={formatDate}/>}
-      {showDetails && isTraining && <TrainingSession trainingData={trainingData} isTrainer={true}/>}
+      {showDetails && isTraining && <TrainingSession trainingData={trainingData} isTrainer={false}/>}
     </div>
   );
 }

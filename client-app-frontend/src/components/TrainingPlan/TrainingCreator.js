@@ -1,14 +1,18 @@
 // TrainingCreator.jsx
 import styles from './TrainingCreator.module.css';
-import { v4 as uuidv4 } from 'uuid';
 
 import React, { useEffect, useState } from 'react';
 
 const TrainingCreator = ({ fortmatDate }) => {
   const [selectedOption1, setSelectedOption1] = useState('08:00');
   const [selectedOption2, setSelectedOption2] = useState('');
+  const [selectedOption3, setSelectedOption3] = useState('09.00');
   const [user, setUser] = useState(null);
   const [trainers, setTrainers] = useState();
+
+  const generateSixDigitId = () => {
+    return Math.floor(100000 + Math.random() * 900000); // Losowa liczba od 100000 do 999999
+  };
 
   const handleOptionChange1 = (event) => {
     setSelectedOption1(event.target.value);
@@ -18,27 +22,33 @@ const TrainingCreator = ({ fortmatDate }) => {
     setSelectedOption2(event.target.value);
   };
 
+  const handleOptionChange3 = (event) => {
+    setSelectedOption3(event.target.value);
+  };
+
   // Dodanie nowego spotkania
   const handleFormSubmit = async (e) => {
     try {
       e.preventDefault();
       const formattedDate = fortmatDate();
-      const chosenDate = `${formattedDate}T${selectedOption1}:00Z`;
-
+      const chosenStart = `${formattedDate}T${selectedOption1}:00Z`;
+      const chosenEnd = `${formattedDate}T${selectedOption3}:00Z`;
       const postData = {
-        appointment_id: uuidv4(),
-        planned_start: chosenDate,
-        planned_end: null,
+        appointment_id: generateSixDigitId(),
+        planned_start: chosenStart,
+        planned_end: chosenEnd,
         comment: null,
         trainer: selectedOption2,
         client: user.user_id,
-        gym: null,
+        gym: 1,
         training: null,
       };
-      
+      console.log(JSON.stringify(postData));
       postData.appointment_id = parseInt(postData.appointment_id, 10);
+      postData.client = parseInt(postData.client, 10);
+      postData.trainer = parseInt(postData.trainer, 10);
 
-      const response = await fetch('http://localhost:8000/client/appointments_api', {
+      const response = await fetch('http://localhost:8000/trainer/add_appointment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,6 +60,7 @@ const TrainingCreator = ({ fortmatDate }) => {
         // Spotkanie zostało dodane pomyślnie
         const result = await response.json();
         console.log(result);
+        
       } else {
         // Obsługa błędu, jeśli wystąpił
         console.error('Błąd podczas dodawania spotkania');
@@ -65,7 +76,6 @@ const TrainingCreator = ({ fortmatDate }) => {
       try {
         const gotUser = JSON.parse(localStorage.getItem('user'));
         if (gotUser) {
-          console.log(gotUser);
           setUser(gotUser);
         }
       } catch (error) {
@@ -90,7 +100,7 @@ const TrainingCreator = ({ fortmatDate }) => {
 
     fetchData();
     fetchTrainers();
-  }, [trainers]); // Dodano trainers do zależności useEffect
+  }, []); // Dodano trainers do zależności useEffect
 
   const hours = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17.00", "18.00", "19.00", "20.00", "21.00"];
 
@@ -100,10 +110,25 @@ const TrainingCreator = ({ fortmatDate }) => {
         <div className={styles.choose}>
           {/* Pierwsza picklista */}
           <label className={styles.label}>
-            Wybierz Godzinę:
+            Wybierz Godzinę Startu:
             <select
               value={selectedOption1}
               onChange={handleOptionChange1}
+              className={styles.input}
+            >
+              {hours.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className={styles.label}>
+            Wybierz Godzinę Zakończenia:
+            <select
+              value={selectedOption3}
+              onChange={handleOptionChange3}
               className={styles.input}
             >
               {hours.map((option, index) => (
@@ -132,7 +157,7 @@ const TrainingCreator = ({ fortmatDate }) => {
         </div>
 
         {/* Przycisk do zatwierdzania zmian */}
-        <button type="submit" className={styles.button}>
+        <button type="submit" className={styles.button} onClick={handleFormSubmit}>
           Zaplanuj trening
         </button>
       </form>

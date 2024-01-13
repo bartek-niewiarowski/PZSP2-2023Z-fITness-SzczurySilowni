@@ -38,8 +38,8 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
       repetitions: 10,
     },
   ]);
-  const [canDelete, setCanDelete] = useState(true);
-  const [canComment, setCanComment] = useState(true);
+  const [canDelete, setCanDelete] = useState(false);
+  const [canComment, setCanComment] = useState(false);
   const [addExercise, setAddExercise] = useState(false);
   const [comment, setComment] = useState(trainingData.comment);
 
