@@ -20,6 +20,7 @@ function Navigation() {
   // Funkcja obslugujaca wylogowywanie
   const handleLogoutClick = () => {
     localStorage.removeItem('user');
+    navigate('/');
     window.location.reload();
   };
 

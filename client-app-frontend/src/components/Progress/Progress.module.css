@@ -1,0 +1,28 @@
+.container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.monthPickerContainer {
+    display: flex;
+    align-items: center;
+    width: 240px; /* Dowolna szerokość, którą chcesz zachować */
+    margin: 10px; /* Dowolne marginesy, które chcesz zastosować */
+  }
+  
+  .monthPickerContainer button {
+    font-size: 16px;
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+  }
+  
+  .monthPickerContainer span {
+    font-size: 16px;
+    margin: 0 5px;
+  }

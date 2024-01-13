@@ -36,10 +36,6 @@ export default function MyData({userId = null}) {
                     console.error('Error fetching data:', error);
                   }
                 }
-                else {
-                  const gotUser = JSON.parse(localStorage.getItem('user'));
-                  if(gotUser){ setUserData(gotUser)}
-                } 
             } catch (error) {
               console.error('Error fetching data:', error);
             }
