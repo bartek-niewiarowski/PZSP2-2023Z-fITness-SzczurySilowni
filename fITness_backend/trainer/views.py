@@ -42,3 +42,12 @@ class UpdateAppointmentView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class DeleteAppointmentView(APIView):
+    def delete(self, request, pk=None):
+        try:
+            appointment = Appointments.objects.get(appointment_id=pk)
+            appointment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
