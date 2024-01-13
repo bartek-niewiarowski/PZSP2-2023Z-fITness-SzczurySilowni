@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styles from './TrainingSession.module.css';
 import ExerciseForm from './ExerciseForm';
 
-const TrainingSession = ({ trainingData, isTrainer }) => {
+const TrainingSession = ({ gotTrainingData, isTrainer }) => {
   const [exercises, setExercises] = useState([
     {
       exercise_id: 1,
@@ -38,10 +38,10 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
       repetitions: 10,
     },
   ]);
-  const [canDelete, setCanDelete] = useState(false);
-  const [canComment, setCanComment] = useState(false);
+  const [canDelete, setCanDelete] = useState(true);
+  const [canComment, setCanComment] = useState(true);
   const [addExercise, setAddExercise] = useState(false);
-  const [comment, setComment] = useState(trainingData.comment);
+  const [trainingData, setTrainingData] = useState(gotTrainingData);
 
   // Funkcja do pobierania ćwiczeń na podstawie appointment_id (do implementacji)
   const fetchData = async () => {
@@ -66,23 +66,58 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
 
   const handleDeleteExercise = () => {
     // Implementuj logikę usuwania treningu (do implementacji)
-    console.log('Usunięcie treningu');
+    console.log('Usunięcie ćwiczenia');
   };
 
-  const handleCancelTraining = () => {
-    console.log('Odwolanie treningu');
+  const handleCancelTraining = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/trainer/delete_appointment/${trainingData.appointment_id}`, {
+          method: 'DELETE',
+      });
+      if (response.ok) {
+        console.log('Rekord został usunięty');
+        window.location.reload();
+      } else {
+        console.error('Błąd podczas usuwania rekordu');
+      }
+      } catch (error) {
+      console.error('Błąd delete:', error);
+      }
   }
 
-  const handleAddComment = () => {
-    
-  }
+  const handleAddComment = async () => {
+    try {
+      console.log("Tutaj");
+      console.log(trainingData);
+      const response = await fetch(`http://localhost:8000/trainer/update_appointment/${trainingData.appointment_id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(trainingData),
+      })
+      const result = await response.json();
+      console.log(result);
+    } catch(error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  };
 
+  
   const handleAddExercise = () => {
     setAddExercise(true);
   }
 
   const handleClose = () => {
     setAddExercise(false);
+  }
+
+  const handleChangeComment = (e) => {
+    setTrainingData({
+      ...trainingData,
+      [e.target.name]: e.target.value,
+    });
   }
 
   useEffect(() => {
@@ -124,9 +159,10 @@ const TrainingSession = ({ trainingData, isTrainer }) => {
           <div className={styles.flexContainer}>
             <textarea
                 placeholder="Dodaj komentarz..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                value={trainingData.comment}
+                onChange={handleChangeComment}
                 className={styles.textarea}
+                name="comment"
             />
             <button onClick={handleAddComment} className={styles.comment}>
                 Dodaj komentarz

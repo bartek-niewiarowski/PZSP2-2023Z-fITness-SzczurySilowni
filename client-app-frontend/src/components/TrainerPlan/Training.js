@@ -23,7 +23,7 @@ const Training = ({ training }) => {
       <button onClick={handleExpandClick} className={styles.button}>
         {isExpanded ? 'Zwiń' : 'Rozwiń'}
       </button>
-      {isExpanded && <TrainingSession trainingData={training} isTrainer={true} />}
+      {isExpanded && <TrainingSession gotTrainingData={training} isTrainer={true} />}
       <hr />
     </div>
   );

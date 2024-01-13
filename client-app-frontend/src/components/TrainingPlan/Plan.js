@@ -70,7 +70,7 @@ const Plan = () => {
       <br />
       {showDetails && <div>{date}</div>}
       {showDetails && !isTraining && <TrainingCreator fortmatDate={formatDate}/>}
-      {showDetails && isTraining && <TrainingSession trainingData={trainingData} isTrainer={false}/>}
+      {showDetails && isTraining && <TrainingSession gotTrainingData={trainingData} isTrainer={false}/>}
     </div>
   );
 }
