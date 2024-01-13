@@ -116,7 +116,7 @@ class Users(models.Model):
     second_name = models.CharField(max_length=45, blank=True, null=True)
     surname = models.CharField(max_length=45)
     gender = models.CharField(max_length=1, blank=True, null=True)
-    subscription_plan = models.ForeignKey(SubscriptionPlans, models.DO_NOTHING, db_column='subscription_plan', blank=True, null=True)
+    subscription_plan_id = models.ForeignKey(SubscriptionPlans, models.DO_NOTHING, db_column='subscription_plan_id', blank=True, null=True)
     subscription_expiration = models.DateField(blank=True, null=True)
 
     class Meta:
