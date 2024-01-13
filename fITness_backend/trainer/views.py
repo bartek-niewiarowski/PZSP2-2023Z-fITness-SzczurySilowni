@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Appointments
-from .serializers import AppointmentsSerializer
+from .models import Appointments, Exercises
+from .serializers import AppointmentsSerializer, ExercisesSerializer
 
 
 class AddAppointmentView(APIView):
@@ -61,3 +61,13 @@ class DeleteAppointmentView(APIView):
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
+class ExerciseView(APIView):
+    def get(self, request, format=None):
+        training_id = request.query_params.get('training_id', None)
+        if training_id:
+            exercises = Exercises.objects.filter(training=training_id)
+        else:
+            exercises = Exercises.objects.all()
+        serializer = ExercisesSerializer(exercises, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
