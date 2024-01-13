@@ -120,13 +120,13 @@ CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Appointments` (
   `planned_end` DATETIME NOT NULL,
   `comment` VARCHAR(500) NULL,
   `trainer` INT NOT NULL,
-  `clinet` INT NOT NULL,
+  `client` INT NOT NULL,
   `gym` INT NOT NULL,
   `training` INT NULL,
   PRIMARY KEY (`appointment_id`),
   INDEX `traning_idx` (`training` ASC) VISIBLE,
   INDEX `trainer_appoint_idx` (`trainer` ASC) VISIBLE,
-  INDEX `client_appoint_idx` (`clinet` ASC) VISIBLE,
+  INDEX `client_appoint_idx` (`client` ASC) VISIBLE,
   INDEX `gym_appoint_idx` (`gym` ASC) VISIBLE,
   CONSTRAINT `traning_appoint`
     FOREIGN KEY (`training`)
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Appointments` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `client_appoint`
-    FOREIGN KEY (`clinet`)
+    FOREIGN KEY (`client`)
     REFERENCES `pzsp2-db`.`Users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
