@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from client import urls as client_urls
+from trainer import urls as trainer_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('client/', include(client_urls))
+    path('client/', include(client_urls)),
+    path('trainer/', include(trainer_urls))
 ]
