@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Appointments
-from .serializers import AppointmentsSerializer
+from .models import Appointments, Exercises, Gyms
+from .serializers import AppointmentsSerializer, ExercisesSerializer, GymsSerializer
 
 
 class AddAppointmentView(APIView):
@@ -61,3 +61,35 @@ class DeleteAppointmentView(APIView):
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
+class ExerciseView(APIView):
+    def post(self, request, format=None):
+        serializer = ExercisesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk=None):
+        try:
+            exercise = Exercises.objects.get(exercise_id=pk)
+            exercise.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, format=None):
+        training_id = request.query_params.get('training_id', None)
+        if training_id:
+            exercises = Exercises.objects.filter(training=training_id)
+        else:
+            exercises = Exercises.objects.all()
+        serializer = ExercisesSerializer(exercises, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class AllGymsView(APIView):
+    def get(self, request, format=None):
+        gyms = Gyms.objects.all()
+        serializer = GymsSerializer(gyms, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
