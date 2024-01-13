@@ -5,8 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Appointments, Exercises
-from .serializers import AppointmentsSerializer, ExercisesSerializer
+from .models import Appointments, Exercises, Gyms
+from .serializers import AppointmentsSerializer, ExercisesSerializer, GymsSerializer
 
 
 class AddAppointmentView(APIView):
@@ -85,4 +85,11 @@ class ExerciseView(APIView):
         else:
             exercises = Exercises.objects.all()
         serializer = ExercisesSerializer(exercises, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class AllGymsView(APIView):
+    def get(self, request, format=None):
+        gyms = Gyms.objects.all()
+        serializer = GymsSerializer(gyms, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
