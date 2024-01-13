@@ -9,24 +9,6 @@ from .models import Users, Trainings, SubscriptionPlans
 from .serializers import UserSerializer, TrainingsSerializer, SubscriptionPlansSerializer
 
 
-# Create your views here.
-# class UserApiView(APIView):
-#     def get(self, request, *args, **kwargs):
-#         users = Users.objects.all()
-#         serializer = UserSerializer(users, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-# Apka Klienta
-#
-# - obsługa logowania
-# - dodanie użytkownika
-# - pobranie treningu danego dnia dla danego użytkownika
-# - pobranie dokładnych informacji o treningu, ćwiczenia, serie
-# - dodanie danego treningu, user, trener, data
-# - anulowanie danego treningu / opcjonalnie
-# - zmiana subskrybcji
-# - update usera
-
-
 class UserApiView(APIView):
     def get(self, request, format=None):
         email = request.query_params.get('email', None)
