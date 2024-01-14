@@ -157,14 +157,14 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Exercises` (
   `exercise_id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
-  `training` INT NULL,
+  `appointment` INT NULL,
   `equipment` INT NULL,
   PRIMARY KEY (`exercise_id`),
-  INDEX `training_idx` (`training` ASC) VISIBLE,
+  INDEX `appointment_idx` (`appointment` ASC) VISIBLE,
   INDEX `equipment_idx` (`equipment` ASC) VISIBLE,
-  CONSTRAINT `training`
-    FOREIGN KEY (`training`)
-    REFERENCES `pzsp2-db`.`Trainings` (`trainings_id`)
+  CONSTRAINT `appointment`
+    FOREIGN KEY (`appointment`)
+    REFERENCES `pzsp2-db`.`Appointments` (`appointment_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `equipment`

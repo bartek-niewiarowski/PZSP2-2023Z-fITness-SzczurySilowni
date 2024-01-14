@@ -79,9 +79,9 @@ class ExerciseView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, format=None):
-        training_id = request.query_params.get('training_id', None)
-        if training_id:
-            exercises = Exercises.objects.filter(training=training_id)
+        appointment_id = request.query_params.get('appointment_id', None)
+        if appointment_id:
+            exercises = Exercises.objects.filter(appointment=appointment_id)
         else:
             exercises = Exercises.objects.all()
         serializer = ExercisesSerializer(exercises, many=True)
