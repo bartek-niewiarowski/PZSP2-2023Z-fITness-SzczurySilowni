@@ -30,9 +30,20 @@ const TrainingSession = ({ gotTrainingData, isTrainer }) => {
     }
   };
 
-  const handleDeleteExercise = () => {
-    // Implementuj logikę usuwania treningu (do implementacji)
-    console.log('Usunięcie ćwiczenia');
+  const handleDeleteExercise = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8000/trainer/get_exercises?exercise_id=${id}`, {
+          method: 'DELETE',
+      });
+      if (response.ok) {
+        console.log('Rekord został usunięty');
+        window.location.reload();
+      } else {
+        console.error('Błąd podczas usuwania rekordu');
+      }
+      } catch (error) {
+      console.error('Błąd delete:', error);
+      }
   };
 
   const handleCancelTraining = async () => {
@@ -100,7 +111,7 @@ const TrainingSession = ({ gotTrainingData, isTrainer }) => {
           <h2>{exercise.name}</h2>
           <p><strong>Id maszyny:</strong> {exercise.equipment}</p>
           {canDelete && (
-            <button onClick={handleDeleteExercise} className={styles.button}>
+            <button onClick={() => handleDeleteExercise(exercise.exercise_id)} className={styles.button}>
               Usuń ćwiczenie
             </button>
           )}

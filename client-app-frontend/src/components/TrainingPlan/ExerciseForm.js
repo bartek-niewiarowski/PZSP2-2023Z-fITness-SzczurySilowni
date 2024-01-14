@@ -41,7 +41,7 @@ const ExerciseForm = ({ isVisible, onCancel, trainingId }) => {
       const newExercise = {
         exercise_id: generateSixDigitId(),
         name: exerciseName,
-        training: trainingId,
+        appointment: trainingId,
         equipment: exerciseEquipment
       };
       console.log(JSON.stringify(newExercise));
