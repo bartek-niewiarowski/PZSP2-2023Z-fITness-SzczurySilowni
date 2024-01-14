@@ -31,7 +31,7 @@ class Equipments(models.Model):
 class Exercises(models.Model):
     exercise_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=45, blank=True, null=True)
-    training = models.ForeignKey('Trainings', models.DO_NOTHING, db_column='training', blank=True, null=True)
+    appointments = models.ForeignKey('Appointments', models.DO_NOTHING, db_column='appointments', blank=True, null=True)
     equipment = models.ForeignKey(Equipments, models.DO_NOTHING, db_column='equipment', blank=True, null=True)
 
     class Meta:
