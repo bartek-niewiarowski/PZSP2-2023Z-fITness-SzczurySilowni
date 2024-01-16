@@ -1,12 +1,14 @@
 from datetime import datetime
 
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Users, Trainings, SubscriptionPlans
-from .serializers import UserSerializer, TrainingsSerializer, SubscriptionPlansSerializer
+from .models import Users, Trainings, SubscriptionPlans, Appointments
+from .serializers import UserSerializer, TrainingsSerializer, SubscriptionPlansSerializer, AppointmentsSerializer
 
 
 class UserApiView(APIView):
@@ -108,3 +110,52 @@ class SubscriptionPlansView(APIView):
         serializer = SubscriptionPlansSerializer(subscription_plan, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class GetAllClientTrainings(APIView):
+
+    def get(self, request, id=None):
+        trainings = Trainings.objects.filter(client=id)
+        serializer = TrainingsSerializer(trainings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetAllClientAppointments(APIView):
+
+    def get(self, request, id=None):
+        appointments = Appointments.objects.filter(client=id)
+        serializer = AppointmentsSerializer(appointments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetTotalTimeSpentInLastMonth(APIView):
+
+    def get(self, request, id=None):
+        try:
+            total_time = Trainings.total_time_last_month(id)
+            return JsonResponse({'client_id': id, 'total_time_last_month': total_time})
+        except Users.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class GetAllTrainingsThisMonth(APIView):
+
+    def get(self, request, id=None):
+        try:
+            last_month_trainings = Trainings.objects.filter(
+                client=id,
+                start__gte=timezone.now() - timezone.timedelta(days=30)
+            )
+            serializer = TrainingsSerializer(last_month_trainings, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Users.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class GetMostCommonTrainerForClient(APIView):
+
+    def get(self, request, id=None):
+        try:
+            all_trainers = Appointments.get_client_most_common_trainer(id)
+            return JsonResponse(all_trainers)
+        except Users.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
