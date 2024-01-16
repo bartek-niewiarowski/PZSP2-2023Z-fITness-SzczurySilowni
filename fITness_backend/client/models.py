@@ -11,6 +11,17 @@ class Appointments(models.Model):
     gym = models.ForeignKey('Gyms', models.DO_NOTHING, db_column='gym')
     training = models.ForeignKey('Trainings', models.DO_NOTHING, db_column='training', blank=True, null=True)
 
+    @staticmethod
+    def get_client_most_common_trainer(client_id):
+        # function returns most common trainer for specific user id and total appointments with this trainer
+        all_appointments = Appointments.objects.filter(client=client_id)
+        most_common_trainer = {appointment.trainer: all_appointments.count(all_appointments.trainer) for appointment in
+                               all_appointments}
+        try:
+            return {max(most_common_trainer): max(most_common_trainer.values())}
+        except ValueError:
+            return {}
+
     class Meta:
         managed = False
         db_table = 'Appointments'
