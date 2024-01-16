@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Appointments(models.Model):
@@ -111,6 +112,16 @@ class Trainings(models.Model):
     end = models.DateTimeField(blank=True, null=True)
     locker_num = models.IntegerField(blank=True, null=True)
     client = models.ForeignKey('Users', models.DO_NOTHING, db_column='client')
+
+    @staticmethod
+    def total_time_last_month(client_id):
+        # function counts total time spent in gym in last month. Return value is in seconds
+        last_month_trainings = Trainings.objects.filter(
+            client=client_id,
+            start__gte=timezone.now() - timezone.timedelta(days=30)
+        )
+        total_time = sum((training.end - training.start).total_seconds() for training in last_month_trainings)
+        return total_time
 
     class Meta:
         managed = False
