@@ -2,7 +2,17 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 
-// Komponent implementujacy logowanie uzytkownika
+/**
+ * Login Component
+ * 
+ * Komponent implementujący formularz logowania użytkownika.
+ * 
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {boolean} props.isVisible - Określa, czy komponent jest widoczny.
+ * @param {Function} props.onClose - Funkcja zamykająca komponent.
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący formularz logowania.
+ */
 const Login = ({ isVisible, onClose }) => {
 
   const [username, setUsername] = useState('');

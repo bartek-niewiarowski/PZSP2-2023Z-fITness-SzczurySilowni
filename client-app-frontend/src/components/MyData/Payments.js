@@ -3,6 +3,14 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import ConfirmBox from '../ConfirmBox/ConfirmBox';
 
+/**
+ * Payments Component
+ * 
+ * Komponent implementujący zarządzanie płatnościami użytkownika.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący formularz zarządzania płatnościami.
+ */
 export default function Payments() {
     const [saldo, setSaldo] = useState(-100);
     const [pay, setPay] = useState("");

@@ -1,33 +1,24 @@
-import "./styles.css";
+import "../TrainingPlan/styles.css";
 import { useEffect, useState } from "react";
-import Calendar from "./Calendar";
-import TrainingCreator from "./TrainingCreator";
-import TrainingSession from "./TrainingSession";
+import Calendar from "../TrainingPlan/Calendar";
+import Training from "./Training";
 
 /**
- * Komponent reprezentujący plan treningowy użytkownika.
- *
+ * TrainerPlan Component
+ * 
+ * Komponent implementujący widok kalendarza trenera z planem treningów.
+ * 
  * @component
- * @returns {JSX.Element} - Zwraca element JSX reprezentujący plan treningowy.
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący kalendarz trenera.
  */
-const Plan = () => {
+const TrainerPlan = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [date, setData] = useState(null);
-  const [isTraining, setIsTraining] = useState(false);
-  const [trainingData, setTrainingData] = useState({
-    appointment_id: null,
-    planned_start: null,
-    planned_end: null,
-    comment: '',
-    trainer: null,
-    client: null,
-    gym: null,
-    training: null,
-  });
+  const [trainingData, setTrainingData] = useState([]);
   /**
-   * Obsługuje wywołanie wyświetlenia szczegółów treningu dla wybranego dnia.
+   * Obsługa kliknięcia na dzień w kalendarzu.
    *
-   * @param {string} dayStr - Data w formacie stringa.
+   * @param {string} dayStr - Data wybranego dnia.
    * @returns {void}
    */
   const showDetailsHandle = (dayStr) => {
@@ -36,7 +27,7 @@ const Plan = () => {
     setShowDetails(true);
   };
   /**
-   * Formatuje aktualną datę do postaci używanej w zapytaniach do API.
+   * Formatuje aktualną datę do postaci "YYYY-MM-DD".
    *
    * @returns {string} - Sformatowana data.
    */
@@ -49,7 +40,7 @@ const Plan = () => {
     return formattedDate;  
   }
   /**
-   * Pobiera dane dotyczące treningu dla aktualnej daty.
+   * Pobiera dane o treningach dla wybranego dnia i trenera.
    *
    * @returns {void}
    */
@@ -59,16 +50,13 @@ const Plan = () => {
     
     try {
       if (user && user.user_id) {
-        const response = await fetch(`http://localhost:8000/trainer/get_appointment_client?client=${user.user_id}&date=${formattedDate}`);
+        const response = await fetch(`http://localhost:8000/trainer/get_appointment_trainer?trainer=${user.user_id}&date=${formattedDate}`);
         const result = await response.json();
-        console.log(result);
         
         if (result && result.length > 0) {
-          setIsTraining(true);
-          setTrainingData(result[0]);
+          setTrainingData(result);
         } else {
-          setIsTraining(false);
-          setTrainingData(null);
+          setTrainingData([]);
         }
       }
     } catch (error) {
@@ -87,11 +75,14 @@ const Plan = () => {
       <h2>Sprawdź plan na ten tydzień</h2>
       <Calendar showDetailsHandle={showDetailsHandle} />
       <br />
-      {showDetails && <div>{date}</div>}
-      {showDetails && !isTraining && <TrainingCreator fortmatDate={formatDate}/>}
-      {showDetails && isTraining && <TrainingSession gotTrainingData={trainingData} isTrainer={false}/>}
+      <div>{date}</div>
+      <div>
+        {trainingData && trainingData.map((training) => (
+          <Training key={training.appointment_id} training={training} />
+        ))}
+      </div>
     </div>
   );
 }
 
-export default Plan;
+export default TrainerPlan;
