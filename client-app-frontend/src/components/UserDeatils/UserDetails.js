@@ -1,4 +1,3 @@
-// UserProfile.jsx
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import MyData from '../MyData/MyData';
@@ -7,7 +6,12 @@ import ConfirmBox from '../ConfirmBox/ConfirmBox';
 import { useState } from 'react';
 import Payments from '../MyData/Payments';
 
-// Komponent implementujacy modyfikacje danych uzytkownika po stronie Portiera
+/**
+ * Komponent implementujący modyfikacje danych użytkownika po stronie Portiera.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący interfejs zarządzania danymi użytkownika.
+ */
 const UserDetails = () => {
   const { userId } = useParams();
 
@@ -20,7 +24,12 @@ const UserDetails = () => {
   const closeConfirmationDialog = () => {
         setIsConfirmationOpen(false);
   }
-
+  
+  /**
+   * Obsługuje usunięcie użytkownika po zatwierdzeniu w oknie dialogowym.
+   * @param {Event} event - Obiekt zdarzenia.
+   * @returns {void}
+   */
   const handleDelete = (event) => {
     event.preventDefault();
     setIsConfirmationOpen(false);

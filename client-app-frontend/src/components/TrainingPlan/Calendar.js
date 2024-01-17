@@ -13,7 +13,14 @@ import {
 } from "date-fns";
 import './styles.css';
 
-
+/**
+ * Komponent kalendarza umożliwiający wybór daty, wyświetlanie miesięcy oraz przeglądanie tygodni.
+ *
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {Function} props.showDetailsHandle - Funkcja obsługująca wyświetlanie szczegółów dla wybranej daty.
+ * @returns {JSX.Element} - Zwraca element JSX reprezentujący kalendarz.
+ */
 const Calendar = ({ showDetailsHandle }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));

@@ -11,6 +11,12 @@ import Footer from './components/Footer/Footer.js';
 import { Box } from '@mui/system';
 import './App.css';
 
+/**
+ * Główny komponent aplikacji.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element całej aplikacji.
+ */
 function App() {
   const items = {clubs: {to: 'ourClubs', desc: 'Nasze kluby'}}
   return (

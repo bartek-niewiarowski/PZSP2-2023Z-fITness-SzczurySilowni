@@ -72,11 +72,17 @@ class ExerciseView(APIView):
 
     def delete(self, request, pk=None):
         try:
-            exercise = Exercises.objects.get(exercise_id=pk)
+            exercise_id = request.query_params.get('exercise_id')
+            if not exercise_id:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
+            exercise = Exercises.objects.get(exercise_id=exercise_id)
             exercise.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        except:
+        except Exercises.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request, format=None):
         appointment_id = request.query_params.get('appointment_id', None)

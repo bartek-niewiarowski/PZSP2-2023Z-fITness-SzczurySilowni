@@ -1,6 +1,15 @@
 import styles from "./UserChoose.module.css";
 
-// Komponent implementujacy przechodzenie miedzy widokami w sekcji Klienta
+/**
+ * Komponent implementujący przechodzenie między widokami w sekcji Klienta.
+ * 
+ * @component
+ * @param {Object} props - Właściwości komponentu.
+ * @param {Array} props.options - Dostępne opcje widoków.
+ * @param {Function} props.onChangeView - Funkcja do zmiany aktywnego widoku.
+ * @param {string} props.activeView - Aktualnie aktywny widok.
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący interfejs wyboru widoków.
+ */
 export default function UserChoose({ options, onChangeView, activeView }) {
   
   const handleViewClick = (view) => {

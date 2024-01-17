@@ -6,7 +6,14 @@ import Register from '../Register/Register.js';
 
 import styles from './Navigation.module.css'; // Import your CSS file
 
-// Komponent implementuje nawigacje w aplikacji
+/**
+ * Navigation Component
+ * 
+ * Komponent implementujący nawigację w aplikacji.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący nawigację z linkami i funkcjonalnością logowania.
+ */
 function Navigation() {
   const [isLoginVisible, setIsLoginVisible] = useState(false);
   const [isRegisterVisible, setIsRegisterVisible] = useState(false);
@@ -20,6 +27,7 @@ function Navigation() {
   // Funkcja obslugujaca wylogowywanie
   const handleLogoutClick = () => {
     localStorage.removeItem('user');
+    navigate('/');
     window.location.reload();
   };
 
@@ -87,7 +95,7 @@ function Navigation() {
             <a onClick={handleLogoutClick} className={styles.listItem}>
             Wyloguj sie
             </a>
-            <li className={styles.listItem}>
+            {loggedUser.access_rights !== "USR" && <li className={styles.listItem}>
               <div className={styles.roleDropdown}>
                 <span>Przejdź do:</span>
                 <select onChange={(e) => handleNavigation(e.target.value)} className={styles.roleDropdown}>
@@ -97,7 +105,7 @@ function Navigation() {
                   <option value="Administrator">Administrator</option>
                 </select>
               </div>
-            </li>
+            </li>}
           </>}
           { !isUserLoggedIn &&
           <>

@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Header.module.css'; // Import your CSS file
+import styles from './Header.module.css';
 import Navigation from './Navigation.js';
 
 import Logo from '../../assets/Logo.png';
 
-//Komponent implementujacy header aplikacji wyswietlany na gorze strony aplikacji
-const Header = (items) => {
+/**
+ * Header Component
+ * 
+ * Komponent implementujący nagłówek aplikacji wyświetlany na górze strony.
+ * 
+ * @component
+ * @returns {JSX.Element} - Zwraca JSX element reprezentujący nagłówek z logo i nawigacją.
+ */
+const Header = () => {
     return (
         <div className={styles.container}>
             <div className={styles.item}> 
@@ -15,7 +22,7 @@ const Header = (items) => {
                 </Link>
             </div>
             <div className={styles.item}>
-                <Navigation items={items}/>
+                <Navigation/>
             </div>
         </div>
     );
