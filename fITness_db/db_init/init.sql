@@ -97,7 +97,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Trainings` (
   `trainings_id` INT NOT NULL,
-  `gym` INT NOT NULL,
   `start` DATETIME NOT NULL,
   `end` DATETIME NULL,
   `locker_num` INT NULL,
@@ -107,11 +106,6 @@ CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Trainings` (
   CONSTRAINT `client`
     FOREIGN KEY (`client`)
     REFERENCES `pzsp2-db`.`Users` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `gym`
-    FOREIGN KEY (`gym`)
-    REFERENCES `pzsp2-db`.`Gyms` (`gym_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -134,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Appointments` (
   INDEX `trainer_appoint_idx` (`trainer` ASC) VISIBLE,
   INDEX `client_appoint_idx` (`client` ASC) VISIBLE,
   INDEX `gym_appoint_idx` (`gym` ASC) VISIBLE,
-  CONSTRAINT `training`
+  CONSTRAINT `traning_appoint`
     FOREIGN KEY (`training`)
     REFERENCES `pzsp2-db`.`Trainings` (`trainings_id`)
     ON DELETE NO ACTION
@@ -163,14 +157,14 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `pzsp2-db`.`Exercises` (
   `exercise_id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
-  `training` INT NULL,
+  `appointment` INT NULL,
   `equipment` INT NULL,
   PRIMARY KEY (`exercise_id`),
-  INDEX `training_idx` (`training` ASC) VISIBLE,
+  INDEX `appointment_idx` (`appointment` ASC) VISIBLE,
   INDEX `equipment_idx` (`equipment` ASC) VISIBLE,
-  CONSTRAINT `training_exercises`
-    FOREIGN KEY (`training`)
-    REFERENCES `pzsp2-db`.`Trainings` (`trainings_id`)
+  CONSTRAINT `appointment`
+    FOREIGN KEY (`appointment`)
+    REFERENCES `pzsp2-db`.`Appointments` (`appointment_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `equipment`
