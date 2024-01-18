@@ -15,8 +15,7 @@
 ## Cel projektu
     Celem naszego projektu jest stworzenie kompleksowego systemu mającego na celu usprawnienie działalności sieci klubów fitness. 
     System ma wspomagać wszystkich użytkowników siłowni: klienta, trenera personalnego, portiera oraz administratora. 
-    Nasz system ma skupić się na trzech kluczowych obszarach: personalizacji treningów, 
-    śledzeniu postępów oraz efektywnym zarządzaniu klubem.
+    Nasz system ma skupić się na trzech kluczowych obszarach: personalizacji treningów, śledzeniu postępów oraz efektywnym zarządzaniu klubem.
     
 
 ## Uruchamianie projektu
