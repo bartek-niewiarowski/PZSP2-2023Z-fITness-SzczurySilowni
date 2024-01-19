@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import styles from './Register.module.css';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Register Component
@@ -20,10 +19,14 @@ const Regsiter = ({isVisible, onClose}) => {
         onClose();
     };
 
+    const generateSixDigitId = () => {
+        return Math.floor(100000 + Math.random() * 900000); // Losowa liczba od 100000 do 999999
+    };
+
     // Przygotowuje komponent do nowej rejestracji po zakonczeniu procesu
     const updateUser = () => {
         setUserData({
-            user_id: uuidv4(),
+            user_id: generateSixDigitId(),
             user_name: '',
             email: '',
             password: '',
@@ -37,7 +40,7 @@ const Regsiter = ({isVisible, onClose}) => {
         });
     };
     const [userData, setUserData] = useState({
-        user_id: uuidv4(),
+        user_id: generateSixDigitId(),
         user_name: '',
         email: '',
         password: '',
@@ -58,8 +61,9 @@ const Regsiter = ({isVisible, onClose}) => {
     };
     // Funkcja realizujaca rejestracje uzytkownika na bazie danych
     const handleRegister = () => {
+        console.log(JSON.stringify(userData))
         userData.user_id = parseInt(userData.user_id, 10);
-        if(userData.password != rePassword) {setMessage("Wprowadzone hasła nie są identyczne")}
+        if(userData.password !== rePassword) {setMessage("Wprowadzone hasła nie są identyczne")}
         else{
         fetch('http://localhost:8000/client/user_api', {
           method: 'POST',
