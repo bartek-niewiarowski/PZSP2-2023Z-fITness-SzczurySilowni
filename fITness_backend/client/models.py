@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from collections import Counter
 
 
 class Appointments(models.Model):
@@ -10,6 +12,16 @@ class Appointments(models.Model):
     client = models.ForeignKey('Users', models.DO_NOTHING, db_column='client', related_name='appointments_client_set')
     gym = models.ForeignKey('Gyms', models.DO_NOTHING, db_column='gym')
     training = models.ForeignKey('Trainings', models.DO_NOTHING, db_column='training', blank=True, null=True)
+
+    @staticmethod
+    def get_client_most_common_trainer(client_id):
+        # function returns most common trainer for specific user id and total appointments with this trainer
+        all_appointments = Appointments.objects.filter(client=client_id).values('trainer')
+        attribute_values = [appointment['trainer'] for appointment in all_appointments]
+        try:
+            return Counter(attribute_values)
+        except ValueError:
+            return {}
 
     class Meta:
         managed = False
@@ -101,6 +113,16 @@ class Trainings(models.Model):
     locker_num = models.IntegerField(blank=True, null=True)
     client = models.ForeignKey('Users', models.DO_NOTHING, db_column='client')
 
+    @staticmethod
+    def total_time_last_month(client_id):
+        # function counts total time spent in gym in last month. Return value is in seconds
+        last_month_trainings = Trainings.objects.filter(
+            client=client_id,
+            start__gte=timezone.now() - timezone.timedelta(days=30)
+        )
+        total_time = sum((training.end - training.start).total_seconds() for training in last_month_trainings)
+        return total_time
+
     class Meta:
         managed = False
         db_table = 'Trainings'
@@ -116,8 +138,32 @@ class Users(models.Model):
     second_name = models.CharField(max_length=45, blank=True, null=True)
     surname = models.CharField(max_length=45)
     gender = models.CharField(max_length=1, blank=True, null=True)
-    subscription_plan = models.ForeignKey(SubscriptionPlans, models.DO_NOTHING, db_column='subscription_plan', blank=True, null=True)
+    subscription_plan_id = models.ForeignKey(SubscriptionPlans, models.DO_NOTHING, db_column='subscription_plan_id',
+                                             blank=True, null=True)
     subscription_expiration = models.DateField(blank=True, null=True)
+
+    @staticmethod
+    def create_report_for_specific_month(client_id, year, month):
+        trainings = Trainings.objects.filter(client=client_id, start__year=year, start__month=month)
+        appointments = Appointments.objects.filter(client=client_id, planned_start__year=year, planned_start__month=month)
+        total_time_on_trainings = sum((training.end - training.start).total_seconds() for training in trainings)
+        only_trainers = appointments.values('trainer')
+        only_trainers = Counter([appointment['trainer'] for appointment in only_trainers])
+        number_of_trainings = len(trainings)
+        number_of_appointments = len(appointments)
+        try:
+            highest_trainings = max(only_trainers.values())
+            most_common_trainers = [Users.objects.get(user_id=trainer).user_name for trainer, trainings in only_trainers.items() if
+                                    trainings == highest_trainings]
+            return {"total_time": total_time_on_trainings,
+                    "most_common_trainer": most_common_trainers,
+                    "num_trainings": number_of_trainings,
+                    "num_appointments": number_of_appointments}
+        except ValueError:
+            return {"total_time": total_time_on_trainings,
+                    "most_common_trainer": None,
+                    "num_trainings": number_of_trainings,
+                    "num_appointments": number_of_appointments}
 
     class Meta:
         managed = False

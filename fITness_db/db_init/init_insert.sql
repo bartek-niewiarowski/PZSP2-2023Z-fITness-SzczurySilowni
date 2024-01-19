@@ -22,9 +22,9 @@ INSERT INTO `pzsp2-db`.`Users` (
     `gender`,
     `subscription_plan_id`,
     `subscription_expiration`
-) VALUES (1, 'example_user', 'example@email.com', 'hashed_password', 'usr', 'John', 'Middle', 'Doe', 'M', 3, '2024-12-31'),
-    (2, 'lorem', 'impsum@email.com', 'hashed_password', 'usr', 'Lorem', 'Impsum', 'Mone', 'K', 1, '2024-09-27'),
-    (3, 'Kaykay', 'rap_forever@email.com', 'hashed_password', 'usr', 'Kanye', NULL, 'East', 'M', 4, '2025-01-02');
+) VALUES (1, 'example_user', 'example@email.com', 'hashed_password', 'USR', 'John', 'Middle', 'Doe', 'M', 3, '2024-12-31'),
+    (2, 'lorem', 'impsum@email.com', 'hashed_password', 'USR', 'Lorem', 'Impsum', 'Mone', 'K', 1, '2024-09-27'),
+    (3, 'Kaykay', 'rap_forever@email.com', 'hashed_password', 'USR', 'Kanye', NULL, 'East', 'M', 4, '2025-01-02');
 
 INSERT INTO `pzsp2-db`.`Users` (
     `user_id`,
@@ -36,10 +36,10 @@ INSERT INTO `pzsp2-db`.`Users` (
     `second_name`,
     `surname`,
     `gender`
-) VALUES (4, 'Byczek', 'byku@email.com', 'hashed_password', 'trn', 'Stefan', NULL, 'Byczek', 'M'),
-    (5, 'Efcia', 'efciunia@email.com', 'hashed_password', 'trn', 'Ewelina', 'Joanna', 'Kwas', 'K'),
-    (6, 'PortierMan', 'egirl.uwu@email.com', 'hashed_password', 'prt', 'Bogdan', NULL, 'Kowalski', 'M'),
-    (7, 'Szefuncio', 'szefroku@email.com', 'hashed_password', 'mng', 'Aga', 'Maria', 'Zarzadza', 'K');
+) VALUES (4, 'Byczek', 'byku@email.com', 'hashed_password', 'TRN', 'Stefan', NULL, 'Byczek', 'M'),
+    (5, 'Efcia', 'efciunia@email.com', 'hashed_password', 'TRN', 'Ewelina', 'Joanna', 'Kwas', 'K'),
+    (6, 'PortierMan', 'egirl.uwu@email.com', 'hashed_password', 'PRT', 'Bogdan', NULL, 'Kowalski', 'M'),
+    (7, 'Szefuncio', 'szefroku@email.com', 'hashed_password', 'ADM', 'Aga', 'Maria', 'Zarzadza', 'K');
 
 
 -- Gyms
