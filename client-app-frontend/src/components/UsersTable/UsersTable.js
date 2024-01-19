@@ -27,6 +27,9 @@ const UsersTable = () => {
   const [searchEmail, setSearchEmail] = useState('');
   const [users, setUsers] = useState(null);
   const [isRegisterVisible, setIsRegisterVisible] = useState(false);
+  const generateSixDigitId = () => {
+    return Math.floor(100000 + Math.random() * 900000); // Losowa liczba od 100000 do 999999
+  };
 
   const openRegistrationModal = () => {
     setIsRegisterVisible(true);
@@ -89,7 +92,7 @@ const UsersTable = () => {
         if (incompleteTrainings.length === 0) {
           // Jeśli brak niezakończonych treningów, dodaj nowy trening
           const postData = {
-            trainings_id: uuidv4(),
+            trainings_id: generateSixDigitId(),
             start: today,
             end: null,
             locker_num: null,
