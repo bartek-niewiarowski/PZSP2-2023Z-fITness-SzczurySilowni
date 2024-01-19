@@ -29,49 +29,57 @@ const Progress = ({userId}) => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
-  useEffect(() => {
-    const fetchData = async () => {
-            try {
-                if(userId) {
-                  try {
-                    const response = await fetch(`http://localhost:8000/client/get_report/${userId}/${currentYear}/${currentMonth+1}`);
-                    const result = await response.json();
-                    if (result) {
-                      setReportData(result);
-                    }
-                  } catch (error) {
-                    console.error('Error fetching data:', error);
-                  }
-                }
-            } catch (error) {
-              console.error('Error fetching data:', error);
+  const fetchData = async (currentYear, currentMonth) => {
+    try {
+        if(userId) {
+          try {
+            const response = await fetch(`http://localhost:8000/client/get_report/${userId}/${currentYear}/${currentMonth+1}`);
+            const result = await response.json();
+            if (result) {
+              if(length(result.most_common_trainer) > 1 ) {
+                result.most_common_trainer = result.most_common_trainer.join(', ');
+              }
+              setReportData(result);
             }
-          };
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     setSelectedMonth(currentMonth);
     setSelectedYear(currentYear);
-    fetchData();
+    fetchData(currentYear, currentMonth);
   }, []);
 
-  const handlePrevMonth = () => {
+  const handlePrevMonth = async () => {
     setSelectedMonth((prevMonth) => {
       const newMonth = (prevMonth - 1 + 12) % 12;
       if (newMonth === 11 && prevMonth === 0) {
         const newYear = selectedYear - 1;
         setSelectedYear(newYear);
+        fetchData(newYear, newMonth)
       }
+      else {fetchData(selectedYear, newMonth)}
       return newMonth;
     });
   };
 
-  const handleNextMonth = () => {
+  const handleNextMonth = async () => {
     setSelectedMonth((prevMonth) => {
       const newMonth = (prevMonth + 1) % 12;
       if (newMonth === 0 && prevMonth === 11) {
         const newYear = selectedYear + 1;
         setSelectedYear(newYear);
+        fetchData(newYear, newMonth);
       }
+      else {fetchData(selectedYear, newMonth)}
       return newMonth;
     });
   };
