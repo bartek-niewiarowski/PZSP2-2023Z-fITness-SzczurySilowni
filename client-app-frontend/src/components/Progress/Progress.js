@@ -19,14 +19,39 @@ const Progress = ({userId}) => {
     'Wrzesień', 'Październik', 'Listopad', 'Grudzień'
   ];
 
+  const [reportData, setReportData] = useState({
+        total_time: '',
+        most_common_trainer: '',
+        num_trainings: '',
+        num_appointments: ''
+      });
+
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
+    const fetchData = async () => {
+            try {
+                if(userId) {
+                  try {
+                    const response = await fetch(`http://localhost:8000/client/get_report/${userId}/${currentYear}/${currentMonth+1}`);
+                    const result = await response.json();
+                    if (result) {
+                      setReportData(result);
+                    }
+                  } catch (error) {
+                    console.error('Error fetching data:', error);
+                  }
+                }
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+          };
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     setSelectedMonth(currentMonth);
     setSelectedYear(currentYear);
+    fetchData();
   }, []);
 
   const handlePrevMonth = () => {
@@ -53,6 +78,16 @@ const Progress = ({userId}) => {
 
   return (
     <div className={styles.container}>
+        <div className={styles.container}>
+            <h2>Twój progress na wybrany miesiąc</h2>
+            <br />
+            <div className={styles.report}>
+                <h3>Razem na siłowni przebywałeś/aś przez { reportData.total_time / 3600} godzin!</h3>
+                <h3>W tym czasie odbyłeś/aś { reportData.num_trainings } treningów </h3>
+                <h3>W tym czasie odbyłeś/aś { reportData.num_appointments } zajęć z trenerami osobistym </h3>
+                <h3>Twoi ulubieni trenerzy to: { reportData.most_common_trainer } </h3>
+            </div>
+        </div>
       <div className={styles.monthPickerContainer}>
         <button onClick={handlePrevMonth}>&lt;</button>
         <span>{months[selectedMonth]} {selectedYear}</span>

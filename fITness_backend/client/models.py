@@ -17,11 +17,8 @@ class Appointments(models.Model):
     def get_client_most_common_trainer(client_id):
         # function returns most common trainer for specific user id and total appointments with this trainer
         all_appointments = Appointments.objects.filter(client=client_id).values('trainer')
-        # most_common_trainer = {appointment['trainer']: all_appointments.count(all_appointments.trainer) for appointment in
-        #                        all_appointments}
         attribute_values = [appointment['trainer'] for appointment in all_appointments]
         try:
-            # return {max(most_common_trainer): max(most_common_trainer.values())}
             return Counter(attribute_values)
         except ValueError:
             return {}
@@ -144,6 +141,29 @@ class Users(models.Model):
     subscription_plan_id = models.ForeignKey(SubscriptionPlans, models.DO_NOTHING, db_column='subscription_plan_id',
                                              blank=True, null=True)
     subscription_expiration = models.DateField(blank=True, null=True)
+
+    @staticmethod
+    def create_report_for_specific_month(client_id, year, month):
+        trainings = Trainings.objects.filter(client=client_id, start__year=year, start__month=month)
+        appointments = Appointments.objects.filter(client=client_id, planned_start__year=year, planned_start__month=month)
+        total_time_on_trainings = sum((training.end - training.start).total_seconds() for training in trainings)
+        only_trainers = appointments.values('trainer')
+        only_trainers = Counter([appointment['trainer'] for appointment in only_trainers])
+        number_of_trainings = len(trainings)
+        number_of_appointments = len(appointments)
+        try:
+            highest_trainings = max(only_trainers.values())
+            most_common_trainers = [Users.objects.get(user_id=trainer).user_name for trainer, trainings in only_trainers.items() if
+                                    trainings == highest_trainings]
+            return {"total_time": total_time_on_trainings,
+                    "most_common_trainer": most_common_trainers,
+                    "num_trainings": number_of_trainings,
+                    "num_appointments": number_of_appointments}
+        except ValueError:
+            return {"total_time": total_time_on_trainings,
+                    "most_common_trainer": None,
+                    "num_trainings": number_of_trainings,
+                    "num_appointments": number_of_appointments}
 
     class Meta:
         managed = False

@@ -2,7 +2,7 @@ from django.urls import path, include
 from .views import (
     UserApiView, TrainingApiView, UpdateUserView, DeleteTrainingView, SubscriptionPlansView, DeleteUserView,
     UserByIdView, UpdateTrainingView, GetAllClientTrainings, GetAllClientAppointments, GetTotalTimeSpentInLastMonth,
-    GetAllTrainingsThisMonth, GetMostCommonTrainerForClient
+    GetAllTrainingsThisMonth, GetMostCommonTrainerForClient, GetMonthReportForClintAndMonth
 )
 
 urlpatterns = [
@@ -19,5 +19,6 @@ urlpatterns = [
     path('get_client_total_time_last_month/<int:id>', GetTotalTimeSpentInLastMonth.as_view()),
     path('get_client_last_month_trainings/<int:id>', GetAllTrainingsThisMonth.as_view()),
     path('get_client_most_common_trainer/<int:id>', GetMostCommonTrainerForClient.as_view()),
+    path('get_report/<int:id>/<int:year>/<int:month>', GetMonthReportForClintAndMonth.as_view()),
 
 ]

@@ -159,3 +159,13 @@ class GetMostCommonTrainerForClient(APIView):
             return JsonResponse(all_trainers)
         except Users.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class GetMonthReportForClintAndMonth(APIView):
+
+    def get(self, request, id=None, year=None, month=None):
+        try:
+            report = Users.create_report_for_specific_month(id, year, month)
+            return JsonResponse(report)
+        except Users.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
