@@ -30,7 +30,7 @@ const Regsiter = ({isVisible, onClose}) => {
             user_name: '',
             email: '',
             password: '',
-            access_rights: 'rw',
+            access_rights: 'USR',
             name: '',
             second_name: '',
             surname: '',

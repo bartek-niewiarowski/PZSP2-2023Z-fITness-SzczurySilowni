@@ -14,7 +14,7 @@ const TrainingSession = ({ gotTrainingData, isTrainer }) => {
   const fetchData = async () => {
     try {
       if (trainingData && trainingData.appointment_id) {
-        const response = await fetch(`http://localhost:8000/trainer/get_exercises?training_id=${trainingData.appointment_id}`);
+        const response = await fetch(`http://localhost:8000/trainer/get_exercises?appointment_id=${trainingData.appointment_id}`);
         const result = await response.json();
         if (result) {
           setExercises(result);
