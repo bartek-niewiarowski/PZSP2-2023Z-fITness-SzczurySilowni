@@ -36,9 +36,10 @@ const Progress = ({userId}) => {
             const response = await fetch(`http://localhost:8000/client/get_report/${userId}/${currentYear}/${currentMonth+1}`);
             const result = await response.json();
             if (result) {
-              if(length(result.most_common_trainer) > 1 ) {
-                result.most_common_trainer = result.most_common_trainer.join(', ');
-              }
+              if(result.most_common_trainer) 
+                if(result.most_common_trainer.length > 1 ) {
+                  result.most_common_trainer = result.most_common_trainer.join(', ');
+                }
               setReportData(result);
             }
           } catch (error) {
